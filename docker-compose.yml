@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+     # MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: "idealvans"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - mysql-compose-network
+
+  adminer:
+    image: adminer:4.6.2
+    ports:
+      - 8089:8080
+    networks:
+      - mysql-compose-network
+
+#  mysql-workbench:
+#    image: lscr.io/linuxserver/mysql-workbench
+#    container_name: mysql-workbench
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=Europe/London
+#    volumes:
+#      - /home/leticia/Desenvolvimento/Docker/Volumes/workbenchconfig:/config
+#    ports:
+#      - 3000:3000
+#    networks:
+#      - mysql-compose-network
+#    cap_add:
+#      - IPC_LOCK
+#    restart: unless-stopped
+    
+networks: 
+  mysql-compose-network:
+    driver: bridge
