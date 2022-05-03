@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 public class Usuario {
     
-    public int idUauario;
+    public int idUsuario;
     public int idPerfil;
     public String nome;
     public String login;
