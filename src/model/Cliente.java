@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class Cliente {
-    
+	
     public int idCliente;
     public String nome;
     public String cpf;
