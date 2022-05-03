@@ -1,4 +1,4 @@
-package model;
+package model.usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -64,6 +64,42 @@ public class UsuarioDAO {
 			ps.setInt(5, usuario.getIdUsuario());
 					
 		}
+		
+		ps.executeUpdate();
+		ConexaoFactory.close(con);
+		return true;
+		
+	}
+	
+	public boolean ativar(Usuario usuario)throws SQLException {
+		con = ConexaoFactory.conectar();
+		
+		
+			sql = "UPDATE usuario SET  status =1" +
+				   "WHERE idUsuario = ?";
+			
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, usuario.getIdUsuario());
+					
+		
+		
+		ps.executeUpdate();
+		ConexaoFactory.close(con);
+		return true;
+		
+	}
+	
+	public boolean desativar(Usuario usuario)throws SQLException {
+		con = ConexaoFactory.conectar();
+		
+		
+			sql = "UPDATE usuario SET  status =0" +
+				   "WHERE idUsuario = ?";
+			
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, usuario.getIdUsuario());
+					
+		
 		
 		ps.executeUpdate();
 		ConexaoFactory.close(con);

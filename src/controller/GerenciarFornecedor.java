@@ -123,6 +123,7 @@ public class GerenciarFornecedor extends HttpServlet {
 	    				}
 	    			}
 	    		}
+	    		
 	    		catch (SQLException e) {
 	    			mensagem = "Erro: " + e.getMessage();
 	    			out.println(mensagem);

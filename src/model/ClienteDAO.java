@@ -32,6 +32,7 @@ public class ClienteDAO {
 			cliente.setEmail(rs.getString("email"));
 			cliente.setEndereco(rs.getString("endereco"));
 			cliente.setTelefone(rs.getString("telefone"));
+			cliente.setStatus(rs.getInt("status"));
 			clientes.add(cliente);
 			
 		}
@@ -44,14 +45,15 @@ public class ClienteDAO {
 		con = ConexaoFactory.conectar();
 		
 		if(cliente.getIdCliente() == 0) {
-			sql = "INSERT INTO cliente (nome, cpf, email, endereco, telefone) VALUES (?, ?,?,?,?)";
+			sql = "INSERT INTO cliente (nome, cpf, email, endereco, telefone, status) VALUES (?,?.?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, cliente.getNome());
 			ps.setString(2, cliente.getCpf());
 			ps.setString(3, cliente.getEmail());
 			ps.setString(4, cliente.getEndereco());
-			ps.setString(5, cliente.getTelefone());			
+			ps.setString(5, cliente.getTelefone());
+			ps.setInt(6, cliente.getStatus());
 			
 		}else {
 			sql = "UPDATE cliente SET nome = ?, cpf = ? , email= ? , endereco = ? , telefone= ? " +
@@ -63,7 +65,8 @@ public class ClienteDAO {
 			ps.setString(3, cliente.getEmail());
 			ps.setString(4, cliente.getEndereco());
 			ps.setString(5, cliente.getTelefone());
-			ps.setInt(6, cliente.getIdCliente());
+			ps.setInt(6, cliente.getStatus());
+			ps.setInt(7, cliente.getIdCliente());
 					
 		}
 		
@@ -76,7 +79,7 @@ public class ClienteDAO {
 	public Cliente getCarregarPorId(int idCliente)throws 
 		SQLException {
 		Cliente cliente = new Cliente();
-		sql = "SELECT idCliente, nome, cpf, email, endereco, telefone " +
+		sql = "SELECT idCliente, nome, cpf, email, endereco, telefone, status " +
 			  " FROM cliente WHERE idCliente = ?";
 		
 		con = ConexaoFactory.conectar();
@@ -90,6 +93,7 @@ public class ClienteDAO {
 			cliente.setEmail(rs.getString("email"));
 			cliente.setEndereco(rs.getString("endereco"));
 			cliente.setTelefone(rs.getString("telefone"));
+			cliente.setStatus(rs.getInt("status"));
 		
 		}
 		

@@ -40,12 +40,10 @@ public class GerenciarCliente extends HttpServlet {
     				if(acao.equals("deletar")) {
     					cliente.setIdCliente(Integer.parseInt(idCliente));
     						if(clientedao.deletar(cliente.getIdCliente())) {
-    							mensagem = 
-    									"Cliente excluído da base de dados!";
+    							mensagem = "Cliente excluído da base de dados!";
     					
     						}else {
-    							mensagem = 
-    						"Falha ao excluir o cliente da base de dados!";
+    							mensagem = "Falha ao excluir o cliente da base de dados!";
     						}
     				
     				}
@@ -87,30 +85,34 @@ public class GerenciarCliente extends HttpServlet {
     		String idCliente = request.getParameter("idCliente");
     		String nome = request.getParameter("nome");
     		String cpf = request.getParameter("cpf");
-    		String email = request.getParameter("email");
     		String endereco = request.getParameter("endereco");
+    		String email = request.getParameter("email");
     		String telefone = request.getParameter("telefone");
+    		String status = request.getParameter("status");
+    		
     		String mensagem = "";
     		Cliente cliente  = new Cliente();
-    	ClienteDAO clientedao = new ClienteDAO();
+    		ClienteDAO clientedao = new ClienteDAO();
     		
     		try {
-    			//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     			
     			if(!idCliente.isEmpty()) {
     				cliente.setIdCliente(Integer.parseInt(idCliente));
-    				
     			}
     			
-    			if(nome.isEmpty() || nome.equals("")) {
-    				mensagem = "Campo Obrigatório";
+    			cliente.setIdCliente(Integer.parseInt(idCliente));
+				cliente.setNome(nome);
+				cliente.setCpf(cpf);
+				cliente.setEndereco(endereco);
+				cliente.setEmail(email);
+				cliente.setTelefone(telefone);
+				cliente.setStatus(Integer.parseInt(status));
+    			
+    			if(cliente.estaInvalido()) {
+    				mensagem = "Campos obrigatórios não informados";
     				
     			}else {
-    				cliente.setNome(nome);
-    				cliente.setCpf(cpf);
-    				cliente.setEmail(email);
-    				cliente.setEndereco(endereco);
-    				cliente.setTelefone(telefone);
+    				
     				if(clientedao.gravar(cliente)) {
     					mensagem = 
     						"Cliente gravado com sucesso na base de dados!";
@@ -121,6 +123,7 @@ public class GerenciarCliente extends HttpServlet {
     				}
     			}
     		}
+    			
     		catch (SQLException e) {
     			mensagem = "Erro: " + e.getMessage();
     			out.println(mensagem);

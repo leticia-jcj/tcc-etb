@@ -17,6 +17,16 @@ public class Cliente {
     public String endereco;
     public String email;
     public String telefone;
-    public int status;        
+    public int status; 
+    
+    public boolean estaInvalido() {
+		return estaVazio(nome) || estaVazio(nome) || estaVazio(cpf) || estaVazio(endereco)
+							   || estaVazio(email) || estaVazio(telefone);
+
+	}
+
+	private boolean estaVazio(String campo) {
+		return (campo.isEmpty() || campo.equals(""));
+	}
     
 }

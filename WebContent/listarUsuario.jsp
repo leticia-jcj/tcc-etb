@@ -60,7 +60,7 @@
 							
 							</thead>
 							<tbody>
-								<jsp:useBean class="model.UsuarioDAO" id="usuariodao" />
+								<jsp:useBean class="model.usuario.UsuarioDAO" id="usuariodao" />
 								<c:forEach var="usuario" items="${usuariodao.lista }">
 								<tr>
 									<td>${usuario.idUsuario}</td>
