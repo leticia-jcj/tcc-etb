@@ -96,6 +96,12 @@ CREATE TABLE `menu_perfil` (
   FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`)
 ) ENGINE='InnoDB' COLLATE 'utf8_danish_ci';
 
+ALTER TABLE `produto`
+ADD `estoque` int(11) NOT NULL AFTER `quantidade`;
+
+ALTER TABLE `produto`
+DROP `quantidade`;
+
 USE `idealvans`;
 
 

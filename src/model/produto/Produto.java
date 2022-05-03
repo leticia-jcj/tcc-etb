@@ -15,8 +15,17 @@ public class Produto {
     public int idFornecedor;
     public String nome;
     public String descricao;
-    public int quantidade;
+    public int estoque;
     public double precoUnitario;
     public int status;
+    
+    public boolean estaInvalido() {
+		return estaVazio(nome);
+
+	}
+
+	private boolean estaVazio(String campo) {
+		return (campo.isEmpty() || campo.equals(""));
+	}
     
 }

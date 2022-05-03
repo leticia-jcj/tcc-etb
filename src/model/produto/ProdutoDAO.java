@@ -17,7 +17,7 @@ public class ProdutoDAO {
 	
 	public ArrayList<Produto> getLista() throws SQLException{
 		ArrayList<Produto> produtos = new ArrayList<>();
-		sql = "SELECT idProduto, idFornecedor, nome, descricao, quantidade, precoUnitario, status " +
+		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario, status " +
 					 "FROM produto";
 		
 		con = ConexaoFactory.conectar();
@@ -30,7 +30,7 @@ public class ProdutoDAO {
 			produto.setIdFornecedor(rs.getInt("idFornecedor"));
 			produto.setNome(rs.getString("nome"));
 			produto.setDescricao(rs.getString("descricao"));
-			produto.setQuantidade(rs.getInt("quantidade"));
+			produto.setEstoque(rs.getInt("estoque"));
 			produto.setPrecoUnitario(rs.getDouble("precoUnitario"));
 			produto.setStatus(rs.getInt("status"));
 			
@@ -46,28 +46,27 @@ public class ProdutoDAO {
 		con = ConexaoFactory.conectar();
 		
 		if(produto.getIdProduto() == 0) {
-			sql = "INSERT INTO produto (idFornecedor, nome, descricao, quantidade, precoUnitario, status ) VALUES (?,?,?,?,?,?)";
+			sql = "INSERT INTO produto (idFornecedor, nome, descricao, estoque, precoUnitario, status ) VALUES (?,?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, produto.getIdFornecedor());
 			ps.setString(2, produto.getNome());
 			ps.setString(3, produto.getDescricao());
-			ps.setInt(4, produto.getQuantidade());			
+			ps.setInt(4, produto.getEstoque());
 			ps.setDouble(5, produto.getPrecoUnitario());
 			ps.setInt(6, produto.getStatus());
 			
 		}else {
-			sql = "UPDATE produto SET idFornecedor = ?, nome = ?, descricao = ?, quantidade = ?, precoUnitario = ?, status = ?" +
+			sql = "UPDATE produto SET idFornecedor = ?, nome = ?, descricao = ?, estoque = ?, precoUnitario = ?, status = ?" +
 				   "WHERE idProduto = ?";
 			
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, produto.getIdFornecedor());
 			ps.setString(2, produto.getNome());
 			ps.setString(3, produto.getDescricao());
-			ps.setInt(4, produto.getQuantidade());			
+			ps.setInt(4, produto.getEstoque());
 			ps.setDouble(5, produto.getPrecoUnitario());
 			ps.setInt(6, produto.getStatus());
-			ps.setInt(7, produto.getIdProduto());
 					
 		}
 		
@@ -80,7 +79,7 @@ public class ProdutoDAO {
 	public Produto getCarregarPorId(int idProduto)throws 
 		SQLException {
 		Produto produto = new Produto();
-		sql = "SELECT idProduto, idFornecedor, nome, descricao, quantidade, precoUnitario, status " +
+		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario, status " +
 			  " FROM produto WHERE idProduto = ?";
 		
 		con = ConexaoFactory.conectar();
@@ -92,7 +91,7 @@ public class ProdutoDAO {
 			produto.setIdFornecedor(rs.getInt("idFornecedor"));
 			produto.setNome(rs.getString("nome"));
 			produto.setDescricao(rs.getString("descricao"));
-			produto.setQuantidade(rs.getInt("quantidade"));
+			produto.setEstoque(rs.getInt("estoque"));
 			produto.setPrecoUnitario(rs.getDouble("precoUnitario"));
 			produto.setStatus(rs.getInt("status"));
 			

@@ -14,9 +14,6 @@ import model.fornecedor.*;
 
 public class GerenciarFornecedor extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	
