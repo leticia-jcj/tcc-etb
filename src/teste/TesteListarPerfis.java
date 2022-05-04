@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import model.Perfil;
-import model.PerfilDAO;
+import model.perfil.Perfil;
+import model.perfil.PerfilDAO;
 
 public class TesteListarPerfis {
 

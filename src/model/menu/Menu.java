@@ -1,4 +1,4 @@
-package model;
+package model.menu;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

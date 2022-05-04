@@ -58,7 +58,7 @@
 							
 							</thead>
 							<tbody>
-								<jsp:useBean class="model.PerfilDAO" id="pdao" />
+								<jsp:useBean class="model.perfil.PerfilDAO" id="pdao" />
 								<c:forEach var="p" items="${pdao.lista }">
 								<tr>
 									<td>${p.idPerfil}</td>

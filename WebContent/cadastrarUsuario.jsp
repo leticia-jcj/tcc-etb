@@ -94,7 +94,7 @@
 					<div class="col-md-6">
 						<select id="idperfil" name="idPerfil" 
 								class="form-control-md mt-2">
-							<jsp:useBean class="model.PerfilDAO" id="pdao"/>
+							<jsp:useBean class="model.perfil.PerfilDAO" id="pdao"/>
 							<c:forEach var="p" items="${pdao.lista}">
 								<option value="${p.idPerfil }"
 									<c:if test="${p.idPerfil == usuario.perfil.idPerfil}"> 

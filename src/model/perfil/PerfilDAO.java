@@ -1,4 +1,4 @@
-package model;
+package model.perfil;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,7 +18,7 @@ public class PerfilDAO {
 	
 	public ArrayList<Perfil> getLista() throws SQLException{
 		ArrayList<Perfil> perfis = new ArrayList<>();
-		sql = "SELECT idPerfil, nome, dataCadastro " +
+		sql = "SELECT idPerfil, nome, dataCadastro, status " +
 					 "FROM perfil";
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
@@ -28,6 +28,7 @@ public class PerfilDAO {
 			p.setIdPerfil(rs.getInt("idPerfil"));
 			p.setNome(rs.getString("nome"));
 			p.setDataCadastro(rs.getDate("dataCadastro"));
+			p.setStatus(rs.getInt("status"));
 			perfis.add(p);
 			
 		}
@@ -39,19 +40,20 @@ public class PerfilDAO {
 	public boolean gravar(Perfil p)throws SQLException {
 		con = ConexaoFactory.conectar();
 		if(p.getIdPerfil() == 0) {
-			sql = "INSERT INTO perfil (nome, dataCadastro) VALUES (?, ?)";
+			sql = "INSERT INTO perfil (nome, dataCadastro, status) VALUES (?,?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, p.getNome());
 			ps.setDate(2, new Date(p.getDataCadastro().getTime()));
-			
+			ps.setInt(3, p.getStatus());
 			
 		}else {
-			sql = "UPDATE perfil SET nome = ?, dataCadastro = ? " +
+			sql = "UPDATE perfil SET nome = ?, dataCadastro = ?, status = ? " +
 				   "WHERE idPerfil = ?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, p.getNome());
 			ps.setDate(2, new Date(p.getDataCadastro().getTime()));
-			ps.setInt(3, p.getIdPerfil());
+			ps.setInt(3, p.getStatus());
+			ps.setInt(4, p.getIdPerfil());
 					
 		}
 		
@@ -64,7 +66,7 @@ public class PerfilDAO {
 	public Perfil getCarregarPorId(int idPerfil)throws 
 		SQLException {
 		Perfil p = new Perfil();
-		sql = "SELECT idPerfil, nome, dataCadastro " +
+		sql = "SELECT idPerfil, nome, dataCadastro, status " +
 			  "FROM perfil WHERE idPerfil = ?";
 		
 		con = ConexaoFactory.conectar();
@@ -75,6 +77,7 @@ public class PerfilDAO {
 			p.setIdPerfil(rs.getInt("idPerfil"));
 			p.setNome(rs.getString("nome"));
 			p.setDataCadastro(rs.getDate("dataCadastro"));
+			p.setStatus(rs.getInt("status"));
 		}
 		
 		ConexaoFactory.close(con);

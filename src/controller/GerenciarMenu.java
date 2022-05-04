@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Menu;
-import model.MenuDAO;
+import model.menu.Menu;
+import model.menu.MenuDAO;
 
 
 @WebServlet("/gerenciarMenu")

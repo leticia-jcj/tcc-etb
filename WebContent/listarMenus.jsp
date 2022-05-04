@@ -60,7 +60,7 @@
 							</thead>
 							
 							<tbody>
-							<jsp:useBean class="model.MenuDAO" id="mdao"/>
+							<jsp:useBean class="model.menu.MenuDAO" id="mdao"/>
 							<c:forEach var="m" items="${mdao.lista}">
 								
 								<tr>

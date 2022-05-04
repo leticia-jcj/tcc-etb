@@ -1,7 +1,7 @@
 package controller;
 
-import model.Cliente;
-import model.ClienteDAO;
+import model.cliente.Cliente;
+import model.cliente.ClienteDAO;
 
 import java.io.IOException;
 import java.io.PrintWriter;

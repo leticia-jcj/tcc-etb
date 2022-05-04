@@ -2,8 +2,8 @@ package teste;
 
 import java.sql.SQLException;
 
-import model.Perfil;
-import model.PerfilDAO;
+import model.perfil.Perfil;
+import model.perfil.PerfilDAO;
 
 public class TesteExcluirPerfil {
 

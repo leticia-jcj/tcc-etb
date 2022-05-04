@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Perfil;
-import model.PerfilDAO;
+import model.perfil.Perfil;
+import model.perfil.PerfilDAO;
 @WebServlet("/gerenciarPerfil")
 public class GerenciarPerfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;

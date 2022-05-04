@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Perfil;
+import model.perfil.Perfil;
 import model.usuario.Usuario;
 import model.usuario.UsuarioDAO;
 

@@ -1,4 +1,4 @@
-package model;
+package model.cliente;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
