@@ -87,7 +87,7 @@ public class GerenciarPerfil extends HttpServlet {
 		String idPerfil = request.getParameter("idPerfil");
 		String nome = request.getParameter("nome");
 		String dataCadastro = request.getParameter("dataCadastro");
-		String idStatus = request.getParameter("status");
+		String status = request.getParameter("status");
 		String mensagem = "";
 		Perfil p = new Perfil();
 		PerfilDAO pdao = new PerfilDAO();
