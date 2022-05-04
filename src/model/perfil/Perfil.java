@@ -18,4 +18,6 @@ public class Perfil {
     public Date dataCadastro;
     public int status;
     
+    //criar metodo para validar campos da model
+    
 }

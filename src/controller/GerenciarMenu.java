@@ -42,7 +42,7 @@ public class GerenciarMenu extends HttpServlet {
 				if(mdao.deletar(m.getIdMenu())) {
 					
 					mensagem = 
-						"Menu excluï¿½do com sucesso da base de dados!";
+						"Menu excluído com sucesso da base de dados!";
 					
 				}else {
 					mensagem =
@@ -59,7 +59,7 @@ public class GerenciarMenu extends HttpServlet {
 			 		dispatcher.forward(request, response);
 			 	}else {
 			 		mensagem = 
-			 		"Perfil nÃ£o encontrado na base de dados";
+			 		"Perfil não encontrado na base de dados";
 			 	}
 				
 			}
@@ -91,7 +91,7 @@ public class GerenciarMenu extends HttpServlet {
 		String nome = request.getParameter("nome");
 		String link = request.getParameter("link");
 		String icone = request.getParameter("icone");
-		String exibir = request.getParameter("exibir");
+		String status = request.getParameter("status");
 		String mensagem = "";
 		
 		Menu m = new Menu();
@@ -114,10 +114,10 @@ public class GerenciarMenu extends HttpServlet {
 			m.setLink(link);
 		}
 		
-		if(exibir.equals("") || exibir.isEmpty()) {
-			mensagem = "Informe o valor do campo exibir!";
+		if(status.equals("") || status.isEmpty()) {
+			mensagem = "Informe o valor do campo status!";
 		}else {
-			m.setExibir(Integer.parseInt(exibir));
+			m.setStatus(Integer.parseInt(status));
 		}
 		
 		m.setIcone(icone);

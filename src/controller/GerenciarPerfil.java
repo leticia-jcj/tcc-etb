@@ -42,12 +42,10 @@ public class GerenciarPerfil extends HttpServlet {
 				if(acao.equals("deletar")) {
 					p.setIdPerfil(Integer.parseInt(idPerfil));
 						if(pdao.deletar(p.getIdPerfil())) {
-							mensagem = 
-									"Perfil exclu√≠do da base de dados!";
+							mensagem = "Perfil excluÌdo da base de dados!";
 					
 						}else {
-							mensagem = 
-						"Falha ao excluir o perfil da base de dados!";
+							mensagem = "Falha ao excluir o perfil da base de dados!";
 						}
 				
 				}
@@ -62,7 +60,7 @@ public class GerenciarPerfil extends HttpServlet {
 						dispatcher.forward(request, response);
 						
 					}else {
-						mensagem = "Perfil n√£o encontrado na base de dados!";
+						mensagem = "Perfil n„o encontrado na base de dados!";
 					}
 				}
 					
@@ -82,14 +80,14 @@ public class GerenciarPerfil extends HttpServlet {
 	}
 
 	
-	protected void doPost(HttpServletRequest request, 
-		HttpServletResponse response) 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String idPerfil = request.getParameter("idPerfil");
 		String nome = request.getParameter("nome");
 		String dataCadastro = request.getParameter("dataCadastro");
+		String idStatus = request.getParameter("status");
 		String mensagem = "";
 		Perfil p = new Perfil();
 		PerfilDAO pdao = new PerfilDAO();
@@ -103,17 +101,15 @@ public class GerenciarPerfil extends HttpServlet {
 			}
 			
 			if(nome.isEmpty() || nome.equals("")) {
-				mensagem = "Campo Obrigat√≥rio";
+				mensagem = "Campo ObrigatÛrio";
 				
 			}else {
 				p.setNome(nome);
 				p.setDataCadastro(df.parse(dataCadastro));
 				if(pdao.gravar(p)) {
-					mensagem = 
-						"Perfil gravado com sucesso na base de dados!";
+					mensagem = "Perfil gravado com sucesso na base de dados!";
 				}else {
-					mensagem =
-						"Falha ao gravar o perfil na base de dados!";
+					mensagem = "Falha ao gravar o perfil na base de dados!";
 					
 				}
 			}
@@ -121,6 +117,7 @@ public class GerenciarPerfil extends HttpServlet {
 		}catch (ParseException pe) {
 			mensagem = "Erro: " + pe.getMessage();
 			out.println(mensagem);
+			
 		}catch (SQLException e) {
 			mensagem = "Erro: " + e.getMessage();
 			out.println(mensagem);
