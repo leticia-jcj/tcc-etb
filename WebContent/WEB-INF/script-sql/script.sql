@@ -102,6 +102,15 @@ ADD `estoque` int(11) NOT NULL AFTER `quantidade`;
 ALTER TABLE `produto`
 DROP `quantidade`;
 
+ALTER TABLE `produto`
+CHANGE `descricao` `descricao` varchar(128) COLLATE 'utf8_danish_ci' NULL AFTER `nome`,
+ADD `nomeFoto` varchar(128) COLLATE 'utf8_danish_ci' NULL AFTER `precoUnitario`,
+ADD `caminho` varchar(256) COLLATE 'utf8_danish_ci' NULL AFTER `nomeFoto`;
+
+ALTER TABLE `orcamento`
+ADD `totalOrcamento` decimal NOT NULL AFTER `dataOrcamento`;
+
+
 USE `idealvans`;
 
 
