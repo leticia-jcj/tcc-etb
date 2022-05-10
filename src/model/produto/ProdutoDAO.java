@@ -17,7 +17,7 @@ public class ProdutoDAO {
 	
 	public ArrayList<Produto> getLista() throws SQLException{
 		ArrayList<Produto> produtos = new ArrayList<>();
-		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario, status " +
+		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario, nomeFoto, caminho, status " +
 					 "FROM produto";
 		
 		con = ConexaoFactory.conectar();
@@ -32,6 +32,8 @@ public class ProdutoDAO {
 			produto.setDescricao(rs.getString("descricao"));
 			produto.setEstoque(rs.getInt("estoque"));
 			produto.setPrecoUnitario(rs.getDouble("precoUnitario"));
+			produto.setNomeFoto(rs.getString("nomeFoto"));
+			produto.setCaminho(rs.getString("caminho"));
 			produto.setStatus(rs.getInt("status"));
 			
 			produtos.add(produto);
@@ -42,11 +44,11 @@ public class ProdutoDAO {
 		return produtos;
 	}
 	
-	public boolean gravar(Produto produto)throws SQLException {
+	public boolean gravar(Produto produto) throws SQLException {
 		con = ConexaoFactory.conectar();
 		
 		if(produto.getIdProduto() == 0) {
-			sql = "INSERT INTO produto (idFornecedor, nome, descricao, estoque, precoUnitario, status ) VALUES (?,?,?,?,?,?)";
+			sql = "INSERT INTO produto (idFornecedor, nome, descricao, estoque, precoUnitario, nomeFoto, caminho, status ) VALUES (?,?,?,?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, produto.getIdFornecedor());
@@ -54,10 +56,12 @@ public class ProdutoDAO {
 			ps.setString(3, produto.getDescricao());
 			ps.setInt(4, produto.getEstoque());
 			ps.setDouble(5, produto.getPrecoUnitario());
-			ps.setInt(6, produto.getStatus());
+			ps.setString(6, produto.getNomeFoto());
+			ps.setString(7, produto.getCaminho());
+			ps.setInt(8, produto.getStatus());
 			
 		}else {
-			sql = "UPDATE produto SET idFornecedor = ?, nome = ?, descricao = ?, estoque = ?, precoUnitario = ?, status = ?" +
+			sql = "UPDATE produto SET idFornecedor = ?, nome = ?, descricao = ?, estoque = ?, precoUnitario = ?,  nomeFoto = ?, caminho= ?, status = ?" +
 				   "WHERE idProduto = ?";
 			
 			ps = con.prepareStatement(sql);
@@ -66,7 +70,9 @@ public class ProdutoDAO {
 			ps.setString(3, produto.getDescricao());
 			ps.setInt(4, produto.getEstoque());
 			ps.setDouble(5, produto.getPrecoUnitario());
-			ps.setInt(6, produto.getStatus());
+			ps.setString(6, produto.getNomeFoto());
+			ps.setString(7, produto.getCaminho());
+			ps.setInt(8, produto.getStatus());
 					
 		}
 		
@@ -76,10 +82,10 @@ public class ProdutoDAO {
 		
 	}
 	
-	public Produto getCarregarPorId(int idProduto)throws 
+	public Produto getCarregarPorId(int idProduto) throws 
 		SQLException {
 		Produto produto = new Produto();
-		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario, status " +
+		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario, nomeProduto, caminho, status " +
 			  " FROM produto WHERE idProduto = ?";
 		
 		con = ConexaoFactory.conectar();
@@ -93,8 +99,9 @@ public class ProdutoDAO {
 			produto.setDescricao(rs.getString("descricao"));
 			produto.setEstoque(rs.getInt("estoque"));
 			produto.setPrecoUnitario(rs.getDouble("precoUnitario"));
+			produto.setNomeFoto(rs.getString("nomeFoto"));
+			produto.setCaminho(rs.getString("caminho"));
 			produto.setStatus(rs.getInt("status"));
-			
 		}
 		
 		ConexaoFactory.close(con);

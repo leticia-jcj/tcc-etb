@@ -110,6 +110,8 @@ ADD `caminho` varchar(256) COLLATE 'utf8_danish_ci' NULL AFTER `nomeFoto`;
 ALTER TABLE `orcamento`
 ADD `totalOrcamento` decimal NOT NULL AFTER `dataOrcamento`;
 
+ALTER TABLE `venda`
+ADD `totalVenda` decimal(6,2) NOT NULL AFTER `idUsuario`;
 
 USE `idealvans`;
 
