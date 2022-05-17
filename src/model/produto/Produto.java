@@ -17,6 +17,8 @@ public class Produto {
     public String descricao;
     public int estoque;
     public double precoUnitario;
+    public String nomeFoto;
+    public String caminho;
     public int status;
     
     public boolean estaInvalido() {

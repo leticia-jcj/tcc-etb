@@ -15,6 +15,7 @@ public class Venda {
    public int idCliente;
    public int idOrcamento;
    public int idUsuario;
+   public double totalVenda;
    public int status;
    
 }
