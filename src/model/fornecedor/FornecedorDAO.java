@@ -80,7 +80,7 @@ public class FornecedorDAO {
 					+ "telefone,"
 					+ "cnpj,"
 					+ "status"
-				+ ") VALUES (?,?,?,?,?,?)";
+				 + ") VALUES (?,?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, fornecedor.getRazaoSocial());
@@ -92,13 +92,13 @@ public class FornecedorDAO {
 			
 		}else {
 			sql = "UPDATE fornecedor SET "
-					+ "razaoSocial = ?,"
-					+ "nomeContato = ?,"
-					+ "email = ?,"
-					+ "telefone = ?,"
-					+ "cnpj = ?,"
-					+ "status = ?" +
-				   "WHERE idFornecedor = ?";
+				+ "razaoSocial = ?,"
+				+ "nomeContato = ?,"
+				+ "email = ?,"
+				+ "telefone = ?,"
+				+ "cnpj = ?,"
+				+ "status = ?" +
+				  "WHERE idFornecedor = ?";
 			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, fornecedor.getRazaoSocial());
