@@ -35,6 +35,11 @@ public class ConexaoFactory {
 			conexao.close();
 		}
 	}
+
+	public static void desconectar(Connection con) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

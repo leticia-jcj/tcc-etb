@@ -15,8 +15,34 @@ public class FornecedorDAO {
 	ResultSet rs;
 	String sql;
 	
+	public Fornecedor getFornecedor(int idFornecedor)throws 
+		SQLException {
+		Fornecedor fornecedor = new Fornecedor();
+		sql = "SELECT idFornecedor, razaoSocial, nomeContato, email, telefone, cnpj, status " +
+			  " FROM fornecedor WHERE idFornecedor = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, idFornecedor);
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			fornecedor.setIdFornecedor(rs.getInt("idFornecedor"));
+			fornecedor.setRazaoSocial(rs.getString("razaoSocial"));
+			fornecedor.setNomeContato(rs.getString("nomeContato"));
+			fornecedor.setEmail(rs.getString("email"));
+			fornecedor.setTelefone(rs.getString("telefone"));
+			fornecedor.setCnpj(rs.getString("cnpj"));
+			fornecedor.setStatus(rs.getInt("status"));
+			
+		}
+		
+		ConexaoFactory.desconectar(con);
+		return fornecedor;
+	}
+	
 	public ArrayList<Fornecedor> getLista() throws SQLException{
-		ArrayList<Fornecedor> fornecedores = new ArrayList<>();
+		ArrayList<Fornecedor> lista = new ArrayList<>();
 		sql = "SELECT idFornecedor, razaoSocial, nomeContato, email, telefone, cnpj, status " +
 					 "FROM fornecedor";
 		
@@ -26,6 +52,7 @@ public class FornecedorDAO {
 		
 		while(rs.next()) {
 			Fornecedor fornecedor = new Fornecedor();
+			
 			fornecedor.setIdFornecedor(rs.getInt("idFornecedor"));
 			fornecedor.setRazaoSocial(rs.getString("razaoSocial"));
 			fornecedor.setNomeContato(rs.getString("nomeContato"));
@@ -34,19 +61,26 @@ public class FornecedorDAO {
 			fornecedor.setCnpj(rs.getString("cnpj"));
 			fornecedor.setStatus(rs.getInt("status"));
 			
-			fornecedores.add(fornecedor);
+			lista.add(fornecedor);
 			
 		}
 		
-		ConexaoFactory.close(con);
-		return fornecedores;
+		ConexaoFactory.desconectar(con);
+		return lista;
 	}
 	
 	public boolean gravar(Fornecedor fornecedor)throws SQLException {
 		con = ConexaoFactory.conectar();
 		
 		if(fornecedor.getIdFornecedor() == 0) {
-			sql = "INSERT INTO fornecedor (razaoSocial, nomeContato, email, telefone, cnpj, status) VALUES (?,?,?,?,?,?)";
+			sql = "INSERT INTO fornecedor ("
+					+ "razaoSocial,"
+					+ "nomeContato,"
+					+ "email,"
+					+ "telefone,"
+					+ "cnpj,"
+					+ "status"
+				+ ") VALUES (?,?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, fornecedor.getRazaoSocial());
@@ -57,7 +91,13 @@ public class FornecedorDAO {
 			ps.setInt(6, fornecedor.getStatus());
 			
 		}else {
-			sql = "UPDATE fornecedor SET razaoSocial = ?, nomeContato = ?, email = ?, telefone = ?, cnpj = ?, status = ?" +
+			sql = "UPDATE fornecedor SET "
+					+ "razaoSocial = ?,"
+					+ "nomeContato = ?,"
+					+ "email = ?,"
+					+ "telefone = ?,"
+					+ "cnpj = ?,"
+					+ "status = ?" +
 				   "WHERE idFornecedor = ?";
 			
 			ps = con.prepareStatement(sql);
@@ -72,48 +112,40 @@ public class FornecedorDAO {
 		}
 		
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		return true;
 		
 	}
 	
-	public Fornecedor getCarregarPorId(int idFornecedor)throws 
-		SQLException {
-		Fornecedor fornecedor = new Fornecedor();
-		sql = "SELECT idFornecedor, razaoSocial, nomeContato, email, telefone, cnpj, status " +
-			  " FROM fornecedor WHERE idFornecedor = ?";
+	public boolean ativar(int idFornecedor)throws SQLException{
+		sql = "UPDATE fornecedor SET "
+			+ "status = ? "
+			+ "WHERE idFornecedor = ?";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
-		ps.setInt(1, idFornecedor);
-		rs = ps.executeQuery();
-		if(rs.next()) {
-			fornecedor.setIdFornecedor(rs.getInt("idFornecedor"));
-			fornecedor.setRazaoSocial(rs.getString("razaoSocial"));
-			fornecedor.setNomeContato(rs.getString("nomeContato"));
-			fornecedor.setEmail(rs.getString("email"));
-			fornecedor.setTelefone(rs.getString("telefone"));
-			fornecedor.setCnpj(rs.getString("cnpj"));
-			fornecedor.setStatus(rs.getInt("status"));
-			
-		}
+		ps.setInt(1, 1);
+		ps.setInt(2, idFornecedor);
 		
-		ConexaoFactory.close(con);
-		return fornecedor;
-	}
-	
-	public boolean deletar(int idFornecedor) throws SQLException {
-		sql = "DELETE FROM fornecedor WHERE idFornecedor = ?";
-		
-		con = ConexaoFactory.conectar();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, idFornecedor);
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+
 		
 		return true;
-		
 	}
-	
+
+	public boolean desativar(int idFornecedor)throws SQLException{
+		sql = "UPDATE fornecedor SET "
+			+ "status = ? "
+			+ "WHERE idFornecedor = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, 0);
+		ps.setInt(2,  idFornecedor);
+		
+		ps.executeUpdate();
+		
+		return true;
+	}
 
 }
