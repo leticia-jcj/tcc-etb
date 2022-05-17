@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import factory.ConexaoFactory;
-import model.produto.Produto;
 
 public class ProdutoDAO {
 
@@ -19,8 +18,8 @@ public class ProdutoDAO {
 	public Produto getProduto(int idProduto)throws 
 	SQLException {
 	Produto produto = new Produto();
-	sql = "SELECT idProduto, dFornecedor, nome, descricao, estoque, precoUnitario, status " +
-		  " FROM produto WHERE idProduto = ?";
+	sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario, nomeFoto, caminho, status " +
+		  "FROM produto WHERE idProduto = ?";
 	
 	con = ConexaoFactory.conectar();
 	ps = con.prepareStatement(sql);
@@ -34,6 +33,8 @@ public class ProdutoDAO {
 		produto.setDescricao(rs.getString("descricao"));
 		produto.setEstoque(rs.getInt("estoque"));
 		produto.setPrecoUnitario(rs.getDouble("precoUnitario"));
+		produto.setNomeFoto(rs.getString("nomeFoto"));
+		produto.setCaminho(rs.getString("caminho"));
 		produto.setStatus(rs.getInt("status"));
 	}
 	
@@ -45,7 +46,7 @@ public class ProdutoDAO {
 	public ArrayList<Produto> getLista() throws SQLException{
 		ArrayList<Produto> produtos = new ArrayList<>();
 		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario, nomeFoto, caminho, status " +
-					 "FROM produto";
+			  "FROM produto";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
@@ -88,7 +89,7 @@ public class ProdutoDAO {
 			ps.setInt(8, produto.getStatus());
 			
 		}else {
-			sql = "UPDATE produto SET idProduto = ?,idFornecedor = ?, nome = ?, descricao = ?, estoque = ?, precoUnitario = ?,nomeFoto = ?, caminho= ?, status = ?" +
+			sql = "UPDATE produto SET idProduto = ?,idFornecedor = ?, nome = ?, descricao = ?, estoque = ?, precoUnitario = ?, nomeFoto = ?, caminho= ?, status = ?" +
 				   "WHERE idProduto = ?";
 			
 			ps = con.prepareStatement(sql);
@@ -114,7 +115,7 @@ public class ProdutoDAO {
 		SQLException {
 		Produto produto = new Produto();
 		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario,nomeFoto = ?, caminho= ?, status " +
-			  " FROM produto WHERE idProduto = ?";
+			  "FROM produto WHERE idProduto = ?";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
