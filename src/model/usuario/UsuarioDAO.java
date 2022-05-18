@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import factory.ConexaoFactory;
-import model.usuario.Usuario;
 
 public class UsuarioDAO {
 
@@ -44,7 +42,7 @@ public class UsuarioDAO {
 }
 	
 	public ArrayList<Usuario> getLista() throws SQLException{
-		ArrayList<Usuario> usuarioes = new ArrayList<>();
+		ArrayList<Usuario> usuario = new ArrayList<>();
 		sql = "SELECT idUsuario, "
 				+ "nome, "
 				+ "login, "
@@ -57,19 +55,19 @@ public class UsuarioDAO {
 		rs = ps.executeQuery();
 		
 		while(rs.next()) {
-			Usuario usuario = new Usuario();
-			usuario.setIdUsuario(rs.getInt("idUsuario"));
-			usuario.setNome(rs.getString("nome"));
-			usuario.setLogin(rs.getString("login"));
-			usuario.setSenha(rs.getString("senha"));
-			usuario.setStatus(rs.getInt("status"));
+			Usuario u = new Usuario();
+			u.setIdUsuario(rs.getInt("idUsuario"));
+			u.setNome(rs.getString("nome"));
+			u.setLogin(rs.getString("login"));
+			u.setSenha(rs.getString("senha"));
+			u.setStatus(rs.getInt("status"));
 			
-			usuarioes.add(usuario);
+			usuario.add(u);
 			
 		}
 		
 		ConexaoFactory.close(con);
-		return usuarioes;
+		return usuario;
 	}
 	
 	public boolean gravar(Usuario usuario)throws SQLException {
@@ -123,7 +121,7 @@ public class UsuarioDAO {
 		con = ConexaoFactory.conectar();
 		
 		
-			sql = "UPDATE usuario SET  status =0" +
+			sql = "UPDATE usuario SET  status = 0 " +
 				   "WHERE idUsuario = ?";
 			
 			con = ConexaoFactory.conectar();
