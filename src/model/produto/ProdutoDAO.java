@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import factory.ConexaoFactory;
+import model.Produto;
 
 public class ProdutoDAO {
 
@@ -110,8 +111,9 @@ public class ProdutoDAO {
 		return true;
 		
 	}
+	//Precisamos desse método?
 	
-	public Produto getCarregarPorId(int idProduto) throws 
+	/*public Produto getCarregarPorId(int idProduto) throws 
 		SQLException {
 		Produto produto = new Produto();
 		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario,nomeFoto = ?, caminho= ?, status " +
@@ -135,8 +137,8 @@ public class ProdutoDAO {
 		
 		ConexaoFactory.close(con);
 		return produto;
-	}
-	
+		}
+		
 	public boolean deletar(int idProduto) throws SQLException {
 		sql = "DELETE FROM produto WHERE idProduto = ?";
 		
@@ -148,6 +150,32 @@ public class ProdutoDAO {
 		
 		return true;
 		
+	}*/
+	
+	public boolean desativar(Produto produto)throws SQLException{
+		sql = "UPDATE produto set status = 0 " +
+			  "WHERE idProduto = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, produto.getIdProduto());
+		ps.executeUpdate();
+		ConexaoFactory.close(con);
+		
+		return true;
+	}
+	
+	public boolean ativar(Produto produto)throws SQLException{
+		sql = "UPDATE produto set status = 1 " +
+			  "WHERE idProduto = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, produto.getIdProduto());
+		ps.executeUpdate();
+		ConexaoFactory.close(con);
+		
+		return true;
 	}
 	
 // AQUI falta implementar os metodos incrementar e decrementar	
