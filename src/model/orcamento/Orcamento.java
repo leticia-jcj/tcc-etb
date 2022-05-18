@@ -1,4 +1,4 @@
-package model;
+package model.orcamento;
 
 import java.util.Date;
 
