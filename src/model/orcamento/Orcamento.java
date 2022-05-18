@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import model.cliente.Cliente;
 
 @NoArgsConstructor
 @ToString
@@ -14,7 +15,7 @@ import lombok.ToString;
 public class Orcamento {
    
     public int idOrcamento;
-    public int idCliente;
+    public Cliente cliente;
     public Date dataOrcamento;
     public double totalOrcamento;
     public double totalVenda;

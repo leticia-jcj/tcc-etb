@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import factory.ConexaoFactory;
+import model.usuario.Usuario;
 
 public class UsuarioDAO {
 
@@ -14,11 +15,42 @@ public class UsuarioDAO {
 	PreparedStatement ps;
 	ResultSet rs;
 	String sql;
+
+	public Usuario getUsuario(int idUsuario)throws 
+	SQLException {
+		Usuario usuario = new Usuario();
+	sql = "SELECT idUsuario, "
+			+ "nome, "
+			+ "login, "
+			+ "senha, "
+			+ "status " +
+		  "FROM usuario WHERE idUsuario = ?";
+	
+	con = ConexaoFactory.conectar();
+	ps = con.prepareStatement(sql);
+	ps.setInt(1, idUsuario);
+	rs = ps.executeQuery();
+	
+	if(rs.next()) {
+		usuario.setIdUsuario(rs.getInt("idUsuario"));
+		usuario.setNome(rs.getString("nome"));
+		usuario.setLogin(rs.getString("login"));
+		usuario.setSenha(rs.getString("senha"));
+		usuario.setStatus(rs.getInt("status"));
+	}
+	
+	ConexaoFactory.desconectar(con);
+	return usuario;
+}
 	
 	public ArrayList<Usuario> getLista() throws SQLException{
 		ArrayList<Usuario> usuarioes = new ArrayList<>();
-		sql = "SELECT idUsuario, nome, login, senha, status " +
-					 "FROM usuario";
+		sql = "SELECT idUsuario, "
+				+ "nome, "
+				+ "login, "
+				+ "senha, "
+				+ "status " +
+			  "FROM usuario";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
@@ -53,7 +85,7 @@ public class UsuarioDAO {
 			ps.setInt(4, usuario.getStatus());
 			
 		}else {
-			sql = "UPDATE usuario SET nome = ?, login = ?, senha = ?, status = ?" +
+			sql = "UPDATE usuario SET nome = ?, login = ?, senha = ?, status = ? " +
 				   "WHERE idUsuario = ?";
 			
 			ps = con.prepareStatement(sql);
@@ -62,7 +94,6 @@ public class UsuarioDAO {
 			ps.setString(3, usuario.getSenha());
 			ps.setInt(4, usuario.getStatus());
 			ps.setInt(5, usuario.getIdUsuario());
-					
 		}
 		
 		ps.executeUpdate();
@@ -75,17 +106,16 @@ public class UsuarioDAO {
 		con = ConexaoFactory.conectar();
 		
 		
-			sql = "UPDATE usuario SET  status =1" +
+			sql = "UPDATE usuario SET  status = 1 " +
 				   "WHERE idUsuario = ?";
 			
+			con = ConexaoFactory.conectar();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, usuario.getIdUsuario());
-					
+			ps.executeUpdate();
+			ConexaoFactory.close(con);
 		
-		
-		ps.executeUpdate();
-		ConexaoFactory.close(con);
-		return true;
+			return true;
 		
 	}
 	
@@ -96,51 +126,16 @@ public class UsuarioDAO {
 			sql = "UPDATE usuario SET  status =0" +
 				   "WHERE idUsuario = ?";
 			
+			con = ConexaoFactory.conectar();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, usuario.getIdUsuario());
-					
-		
-		
-		ps.executeUpdate();
-		ConexaoFactory.close(con);
-		return true;
-		
-	}
-	
-	public Usuario getCarregarPorId(int idUsuario)throws 
-		SQLException {
-		Usuario usuario = new Usuario();
-		sql = "SELECT idUsuario, nome, login, senha, status " +
-			  " FROM usuario WHERE idUsuario = ?";
-		
-		con = ConexaoFactory.conectar();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, idUsuario);
-		rs = ps.executeQuery();
-		if(rs.next()) {
-			usuario.setIdUsuario(rs.getInt("idUsuario"));
-			usuario.setNome(rs.getString("nome"));
-			usuario.setLogin(rs.getString("login"));
-			usuario.setSenha(rs.getString("senha"));
-			usuario.setStatus(rs.getInt("status"));
+			ps.executeUpdate();
+			ConexaoFactory.close(con);
 			
-		}
-		
-		ConexaoFactory.close(con);
-		return usuario;
+			return true;
 	}
-	
-	public boolean deletar(int idUsuario) throws SQLException {
-		sql = "DELETE FROM usuario WHERE idUsuario = ?";
-		
-		con = ConexaoFactory.conectar();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, idUsuario);
-		ps.executeUpdate();
-		ConexaoFactory.close(con);
-		
-		return true;
-		
-	}
+
+
+	//AQUI FALTA CONSTRUIR O METODO LOGIN()
 	
 }

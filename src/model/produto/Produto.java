@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import model.fornecedor.Fornecedor;
 
 @NoArgsConstructor
 @ToString
@@ -12,7 +13,7 @@ import lombok.ToString;
 public class Produto {
     
     public int idProduto;
-    public int idFornecedor;
+    public Fornecedor fornecedor;
     public String nome;
     public String descricao;
     public int estoque;

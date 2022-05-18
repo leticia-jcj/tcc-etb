@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import model.perfil.Perfil;
 
 @NoArgsConstructor
 @ToString
@@ -12,7 +13,7 @@ import lombok.ToString;
 public class Usuario {
     
     public int idUsuario;
-    public int idPerfil;
+    public Perfil perfil;
     public String nome;
     public String login;
     public String senha;
