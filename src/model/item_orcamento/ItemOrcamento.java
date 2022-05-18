@@ -1,4 +1,4 @@
-package model;
+package model.item_orcamento;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
