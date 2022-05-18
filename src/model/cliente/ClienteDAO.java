@@ -160,8 +160,8 @@ public class ClienteDAO {
 	*/
 	
 	public boolean desativar(Cliente cliente)throws SQLException{
-		sql = "UPDATE produto set status = 0 " +
-			  "WHERE idProduto = ?";
+		sql = "UPDATE cliente set status = 0 " +
+			  "WHERE idCliente = ?";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
@@ -173,8 +173,8 @@ public class ClienteDAO {
 	}
 	
 	public boolean ativar(Cliente cliente)throws SQLException{
-		sql = "UPDATE produto set status = 1 " +
-			  "WHERE idProduto = ?";
+		sql = "UPDATE cliente set status = 1 " +
+			  "WHERE idCliente = ?";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);

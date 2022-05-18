@@ -17,6 +17,7 @@ public class Orcamento {
     public int idCliente;
     public Date dataOrcamento;
     public double totalOrcamento;
+    public double totalVenda;
     public int status;
       
 }
