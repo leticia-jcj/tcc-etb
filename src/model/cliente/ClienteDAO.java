@@ -15,10 +15,47 @@ public class ClienteDAO {
 	ResultSet rs;
 	String sql;
 	
+	public Cliente getCliente(int idCliente)throws 
+	SQLException {
+		Cliente cliente = new Cliente();
+	sql = "SELECT idCliente, "
+			+ "nome, "
+			+ "cpf, "
+			+ "endereco, "
+			+ "email, "
+			+ "telefone, "
+			+ "status " +
+		  "FROM cliente WHERE idCliente = ?";
+	
+	con = ConexaoFactory.conectar();
+	ps = con.prepareStatement(sql);
+	ps.setInt(1, idCliente);
+	rs = ps.executeQuery();
+	
+	if(rs.next()) {
+		cliente.setIdCliente(rs.getInt("idCliente"));
+		cliente.setNome(rs.getString("nome"));
+		cliente.setCpf(rs.getString("cpf"));
+		cliente.setEndereco(rs.getString("endereco"));
+		cliente.setEmail(rs.getString("email"));
+		cliente.setTelefone(rs.getString("telefone"));
+		cliente.setStatus(rs.getInt("status"));
+	}
+	
+	ConexaoFactory.desconectar(con);
+	return cliente;
+}
+		
 	public ArrayList<Cliente> getLista() throws SQLException{
 		ArrayList<Cliente> clientes = new ArrayList<>();
-		sql = "SELECT idCliente, nome, cpf, email, endereco, telefone " +
-					 "FROM cliente";
+		sql = "SELECT idCliente,"
+				+ "nome, "
+				+ "cpf, "
+				+ "endereco, "
+				+ "email, "
+				+ "telefone "
+				+ "status" +
+			  "FROM cliente";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
@@ -76,10 +113,17 @@ public class ClienteDAO {
 		
 	}
 	
+	/*
 	public Cliente getCarregarPorId(int idCliente)throws 
 		SQLException {
 		Cliente cliente = new Cliente();
-		sql = "SELECT idCliente, nome, cpf, email, endereco, telefone, status " +
+		sql = "SELECT idCliente, "
+				+ "nome, "
+				+ "cpf, "
+				+ "email, "
+				+ "endereco, "
+				+ "telefone, "
+				+ "status " +
 			  " FROM cliente WHERE idCliente = ?";
 		
 		con = ConexaoFactory.conectar();
@@ -112,8 +156,33 @@ public class ClienteDAO {
 		ConexaoFactory.close(con);
 		
 		return true;
+	}
+	*/
+	
+	public boolean desativar(Cliente cliente)throws SQLException{
+		sql = "UPDATE produto set status = 0 " +
+			  "WHERE idProduto = ?";
 		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, cliente.getIdCliente());
+		ps.executeUpdate();
+		ConexaoFactory.close(con);
+		
+		return true;
 	}
 	
+	public boolean ativar(Cliente cliente)throws SQLException{
+		sql = "UPDATE produto set status = 1 " +
+			  "WHERE idProduto = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, cliente.getIdCliente());
+		ps.executeUpdate();
+		ConexaoFactory.close(con);
+		
+		return true;
+	}
 
 }
