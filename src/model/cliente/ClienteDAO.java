@@ -32,6 +32,7 @@ public class ClienteDAO {
 	ps.setInt(1, idCliente);
 	rs = ps.executeQuery();
 	
+	
 	if(rs.next()) {
 		cliente.setIdCliente(rs.getInt("idCliente"));
 		cliente.setNome(rs.getString("nome"));
@@ -93,7 +94,7 @@ public class ClienteDAO {
 			ps.setInt(6, cliente.getStatus());
 			
 		}else {
-			sql = "UPDATE cliente SET nome = ?, cpf = ? , email= ? , endereco = ? , telefone= ? " +
+			sql = "UPDATE cliente SET nome = ?, cpf = ? , email= ? , endereco = ? , telefone = ? , status = ? " +
 				   "WHERE idCliente = ?";
 			
 			ps = con.prepareStatement(sql);
