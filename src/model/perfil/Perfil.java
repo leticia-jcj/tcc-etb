@@ -13,10 +13,10 @@ import lombok.ToString;
 @Setter
 public class Perfil {
     
-    public int idPerfil;
-    public String nome;
-    public Date dataCadastro;
-    public int status;
+    private int idPerfil;
+    private String nome;
+    private Date dataCadastro;
+    private int status;
     
     //criar metodo para validar campos da model
     

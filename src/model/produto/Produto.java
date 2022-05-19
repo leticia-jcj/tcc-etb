@@ -12,15 +12,15 @@ import model.fornecedor.Fornecedor;
 @Setter
 public class Produto {
     
-    public int idProduto;
-    public Fornecedor fornecedor;
-    public String nome;
-    public String descricao;
-    public int estoque;
-    public double precoUnitario;
-    public String nomeFoto;
-    public String caminho;
-    public int status;
+    private int idProduto;
+    private Fornecedor fornecedor;
+    private String nome;
+    private String descricao;
+    private int estoque;
+    private double precoUnitario;
+    private String nomeFoto;
+    private String caminho;
+    private int status;
     
     public boolean estaInvalido() {
 		return estaVazio(nome);

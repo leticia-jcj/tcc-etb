@@ -11,13 +11,13 @@ import lombok.ToString;
 @Setter
 public class Cliente {
 	
-    public int idCliente;
-    public String nome;
-    public String cpf;
-    public String endereco;
-    public String email;
-    public String telefone;
-    public int status; 
+    private int idCliente;
+    private String nome;
+    private String cpf;
+    private String endereco;
+    private String email;
+    private String telefone;
+    private int status; 
     
     public boolean estaInvalido() {
 		return estaVazio(nome) || estaVazio(nome) || estaVazio(cpf) || estaVazio(endereco)

@@ -14,11 +14,11 @@ import model.usuario.Usuario;
 @Setter
 public class Venda {
     
-   public int idVenda;
-   public Cliente cliente;
-   public Orcamento orcamento;
-   public Usuario usuario;
-   public double totalVenda;
-   public int status;
+   private int idVenda;
+   private Cliente cliente;
+   private Orcamento orcamento;
+   private Usuario usuario;
+   private double totalVenda;
+   private int status;
    
 }

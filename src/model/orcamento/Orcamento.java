@@ -14,11 +14,11 @@ import model.cliente.Cliente;
 @Setter
 public class Orcamento {
    
-    public int idOrcamento;
-    public Cliente cliente;
-    public Date dataOrcamento;
-    public double totalOrcamento;
-    public double totalVenda;
-    public int status;
+    private int idOrcamento;
+    private Cliente cliente;
+    private Date dataOrcamento;
+    private double totalOrcamento;
+    private double totalVenda;
+    private int status;
       
 }

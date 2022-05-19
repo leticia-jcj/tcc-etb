@@ -11,10 +11,10 @@ import lombok.ToString;
 @Setter
 public class Menu {
  
-    public int idMenu;
-    public String nome;
-    public String link;
-    public String icone;
-    public int status;
+    private int idMenu;
+    private String nome;
+    private String link;
+    private String icone;
+    private int status;
     
 }

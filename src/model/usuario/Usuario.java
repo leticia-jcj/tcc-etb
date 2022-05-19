@@ -12,12 +12,12 @@ import model.perfil.Perfil;
 @Setter
 public class Usuario {
     
-    public int idUsuario;
-    public Perfil perfil;
-    public String nome;
-    public String login;
-    public String senha;
-    public int status;
+    private int idUsuario;
+    private Perfil perfil;
+    private String nome;
+    private String login;
+    private String senha;
+    private int status;
     
     public boolean estaInvalido() {
 		return estaVazio(nome) || estaVazio(login) || estaVazio(senha);

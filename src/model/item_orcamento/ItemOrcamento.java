@@ -11,8 +11,8 @@ import lombok.ToString;
 @Setter
 public class ItemOrcamento {
   
-    public int idOrcamento;
-    public int idProduto;
-    public int quantidade;
+    private int idOrcamento;
+    private int idProduto;
+    private int quantidade;
     
 }
