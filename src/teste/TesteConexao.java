@@ -13,8 +13,9 @@ public class TesteConexao {
 		try {
 			conexao = ConexaoFactory.conectar();
 			System.out.println("Conexão efetuada com sucesso!");
-			ConexaoFactory.close(conexao);
+			ConexaoFactory.desconectar(conexao);
 			System.out.println("Conexão Encerrada!");
+			
 		} catch (SQLException e) {
 			System.out.println(
 				"Falha na comunicação com a base de dados: " +
