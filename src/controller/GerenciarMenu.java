@@ -36,21 +36,34 @@ public class GerenciarMenu extends HttpServlet {
 		MenuDAO mdao = new MenuDAO();
 		
 		try {
-			
-			if(acao.equals("deletar")){
+			if(acao.equals("ativar")){
 				m.setIdMenu(Integer.parseInt(idMenu));
-				if(mdao.deletar(m.getIdMenu())) {
+				if(mdao.ativar(m)) {
 					
 					mensagem = 
-						"Menu excluído com sucesso da base de dados!";
+						"Menu ativado com sucesso da base de dados!";
 					
 				}else {
 					mensagem =
-						"Falha ao excluir o menu da base de dados!";
+						"Falha ao desativar o menu na base de dados!";
 				}
 			}
+			
+			if(acao.equals("desativar")){
+				m.setIdMenu(Integer.parseInt(idMenu));
+				if(mdao.desativar(m)) {
+					
+					mensagem = 
+						"Menu desativado com sucesso da base de dados!";
+					
+				}else {
+					mensagem =
+						"Falha ao desativar o menu na base de dados!";
+				}
+			}
+			
 			if(acao.equals("alterar")) {
-			 m = mdao.getCarregarPorId(Integer.parseInt(idMenu));
+			 m = mdao.getMenu(Integer.parseInt(idMenu));
 			 	if(m.getIdMenu() > 0) {
 			 		RequestDispatcher dispatcher =
 			 			getServletContext().
