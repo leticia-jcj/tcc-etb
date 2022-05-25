@@ -18,6 +18,13 @@ public class Perfil {
     private Date dataCadastro;
     private int status;
     
-    //criar metodo para validar campos da model
+    public boolean estaInvalido() {
+		return estaVazio(nome) ;
+
+	}
+
+	private boolean estaVazio(String campo) {
+		return (campo.isEmpty() || campo.equals(""));
+	}
     
 }

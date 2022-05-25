@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import factory.ConexaoFactory;
+import model.perfil.PerfilDAO;
 
 public class UsuarioDAO {
 
@@ -13,11 +15,14 @@ public class UsuarioDAO {
 	PreparedStatement ps;
 	ResultSet rs;
 	String sql;
+	PerfilDAO daoPerfil;
 
 	public Usuario getUsuario(int idUsuario)throws 
 	SQLException {
 		Usuario usuario = new Usuario();
+		daoPerfil = new PerfilDAO();
 	sql = "SELECT idUsuario, "
+			+ "idPerfil, "
 			+ "nome, "
 			+ "login, "
 			+ "senha, "
@@ -31,6 +36,8 @@ public class UsuarioDAO {
 	
 	if(rs.next()) {
 		usuario.setIdUsuario(rs.getInt("idUsuario"));
+		usuario.setPerfil(daoPerfil.getPerfil(
+				rs.getInt("idPerfil")));
 		usuario.setNome(rs.getString("nome"));
 		usuario.setLogin(rs.getString("login"));
 		usuario.setSenha(rs.getString("senha"));
@@ -44,6 +51,7 @@ public class UsuarioDAO {
 	public ArrayList<Usuario> getLista() throws SQLException{
 		ArrayList<Usuario> usuario = new ArrayList<>();
 		sql = "SELECT idUsuario, "
+				+ "idPerfil, "
 				+ "nome, "
 				+ "login, "
 				+ "senha, "
@@ -57,6 +65,8 @@ public class UsuarioDAO {
 		while(rs.next()) {
 			Usuario u = new Usuario();
 			u.setIdUsuario(rs.getInt("idUsuario"));
+			u.setPerfil(daoPerfil.getPerfil(
+					rs.getInt("idPerfil")));
 			u.setNome(rs.getString("nome"));
 			u.setLogin(rs.getString("login"));
 			u.setSenha(rs.getString("senha"));
@@ -66,7 +76,7 @@ public class UsuarioDAO {
 			
 		}
 		
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		return usuario;
 	}
 	
@@ -74,28 +84,41 @@ public class UsuarioDAO {
 		con = ConexaoFactory.conectar();
 		
 		if(usuario.getIdUsuario() == 0) {
-			sql = "INSERT INTO usuario (nome, login, senha, status ) VALUES (?,?,?,?)";
+			sql = "INSERT INTO usuario ("
+					+ "idPerfil, "
+					+ "nome, "
+					+ "login, "
+					+ "senha, "
+					+ "status "
+				+ ") VALUES (?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
-			ps.setString(1, usuario.getNome());
-			ps.setString(2, usuario.getLogin());
-			ps.setString(3, usuario.getSenha());
-			ps.setInt(4, usuario.getStatus());
+			ps.setInt(1, usuario.getPerfil().getIdPerfil());
+			ps.setString(2, usuario.getNome());
+			ps.setString(3, usuario.getLogin());
+			ps.setString(4, usuario.getSenha());
+			ps.setInt(5, usuario.getStatus());
 			
 		}else {
-			sql = "UPDATE usuario SET nome = ?, login = ?, senha = ?, status = ? " +
+			sql = "UPDATE usuario SET "
+					+ "idPerfil = ?, "
+					+ "nome = ?, "
+					+ "login = ?, "
+					+ "senha = ?, "
+					+ "status = ? " +
 				   "WHERE idUsuario = ?";
 			
 			ps = con.prepareStatement(sql);
-			ps.setString(1, usuario.getNome());
-			ps.setString(2, usuario.getLogin());
-			ps.setString(3, usuario.getSenha());
-			ps.setInt(4, usuario.getStatus());
-			ps.setInt(5, usuario.getIdUsuario());
+			ps.setInt(1, usuario.getPerfil().getIdPerfil());
+			ps.setString(2, usuario.getNome());
+			ps.setString(3, usuario.getLogin());
+			ps.setString(4, usuario.getSenha());
+			ps.setInt(5, usuario.getStatus());
+			ps.setInt(6, usuario.getIdUsuario());
 		}
 		
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		return true;
 		
 	}
@@ -104,14 +127,15 @@ public class UsuarioDAO {
 		con = ConexaoFactory.conectar();
 		
 		
-			sql = "UPDATE usuario SET  status = 1 " +
+			sql = "UPDATE usuario SET status = ? " +
 				   "WHERE idUsuario = ?";
 			
 			con = ConexaoFactory.conectar();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, usuario.getIdUsuario());
+			ps.setInt(1, 1);
+			ps.setInt(2, usuario.getIdUsuario());
 			ps.executeUpdate();
-			ConexaoFactory.close(con);
+			ConexaoFactory.desconectar(con);
 		
 			return true;
 		
@@ -121,19 +145,54 @@ public class UsuarioDAO {
 		con = ConexaoFactory.conectar();
 		
 		
-			sql = "UPDATE usuario SET  status = 0 " +
+			sql = "UPDATE usuario SET status = ? " +
 				   "WHERE idUsuario = ?";
 			
 			con = ConexaoFactory.conectar();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, usuario.getIdUsuario());
+			ps.setInt(1, 0);
+			ps.setInt(2, usuario.getIdUsuario());
 			ps.executeUpdate();
-			ConexaoFactory.close(con);
+			ConexaoFactory.desconectar(con);
 			
 			return true;
 	}
 
 
-	//AQUI FALTA CONSTRUIR O METODO LOGIN()
+	public Usuario login(String login, String hash) throws SQLException{
+		Usuario u = new Usuario();
+		
+		sql = "SELECT "
+				+ "idUsuario, "
+				+ "idPerfil, "
+				+ "nome, "
+				+ "login, "
+				+ "senha, "
+				+ "status "
+			+ "WHERE login = ? AND senha = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setString(1, login);
+		ps.setString(2, hash);
+		
+		rs = ps.executeQuery();
+		
+		if(rs.next()){
+			if(rs.getInt("idUsuario") != 0){
+				u.setIdUsuario(rs.getInt("idUsuario"));
+				u.setPerfil(daoPerfil.getPerfil(
+						rs.getInt("idPerfil")));
+				u.setNome(rs.getString("nome"));
+				u.setLogin(rs.getString("login"));
+				u.setSenha(rs.getString("senha"));
+				u.setStatus(rs.getInt("status"));
+			}
+		}
+		
+		ConexaoFactory.desconectar(con);
+		
+		return u;
+	}
 	
 }

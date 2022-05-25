@@ -55,31 +55,41 @@ public class PerfilDAO {
 		
 		while(rs.next()) {
 			Perfil p = new Perfil();
+			
 			p.setIdPerfil(rs.getInt("idPerfil"));
 			p.setNome(rs.getString("nome"));
 			p.setDataCadastro(rs.getDate("dataCadastro"));
 			p.setStatus(rs.getInt("status"));
-			perfis.add(p);
 			
+			perfis.add(p);
 		}
 		
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		return perfis;
 	}
 	
-	public boolean gravar(Perfil p)throws SQLException {
+	public boolean gravar(Perfil p) throws SQLException {
 		con = ConexaoFactory.conectar();
+		
 		if(p.getIdPerfil() == 0) {
-			sql = "INSERT INTO perfil (nome, dataCadastro, status) VALUES (?,?,?)";
+			sql = "INSERT INTO perfil ("
+					+ "nome,"
+					+ "dataCadastro,"
+					+ "status"
+				+ ") VALUES (?,?,?)";
+			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, p.getNome());
 			ps.setDate(2, new Date(p.getDataCadastro().getTime()));
 			ps.setInt(3, p.getStatus());
 			
 		}else {
-			sql = "UPDATE perfil SET nome = ?, "
-					+ "dataCadastro = ?, status = ? " +
+			sql = "UPDATE perfil SET "
+					+ "nome = ?, "
+					+ "dataCadastro = ?, "
+					+ "status = ? " +
 				  "WHERE idPerfil = ?";
+			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, p.getNome());
 			ps.setDate(2, new Date(p.getDataCadastro().getTime()));
@@ -89,12 +99,13 @@ public class PerfilDAO {
 		}
 		
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
+		
 		return true;
 		
 	}
 	
-	public boolean ativar(int idPerfil)throws SQLException{
+	public boolean ativar(Perfil p)throws SQLException{
 		sql = "UPDATE perfil SET "
 			+ "status = ? "
 			+ "WHERE idPerfil = ?";
@@ -102,14 +113,14 @@ public class PerfilDAO {
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
 		ps.setInt(1, 1);
-		ps.setInt(2, idPerfil);
+		ps.setInt(2, p.getIdPerfil());
 	
 		ps.executeUpdate();
 		
 		return true;
 	}
 
-	public boolean desativar(int idPerfil)throws SQLException{
+	public boolean desativar(Perfil p)throws SQLException{
 		sql = "UPDATE perfil SET "
 			+ "status = ? "
 			+ "WHERE idPerfil = ?";
@@ -117,7 +128,7 @@ public class PerfilDAO {
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
 		ps.setInt(1, 0);
-		ps.setInt(2, idPerfil);
+		ps.setInt(2, p.getIdPerfil());
 		
 		ps.executeUpdate();
 		

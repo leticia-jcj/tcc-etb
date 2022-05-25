@@ -1,11 +1,12 @@
 package model.menu_perfil;
 
-import java.awt.Menu;
-import java.sql.Date;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import model.menu.Menu;
 import model.perfil.Perfil;
 
 @NoArgsConstructor
@@ -18,4 +19,5 @@ public class MenuPerfil {
     private Perfil perfil;
     private Menu menu;
     private Date dataCadastro;
+    private int Status;
 }

@@ -18,7 +18,7 @@ public class Venda {
    private Cliente cliente;
    private Orcamento orcamento;
    private Usuario usuario;
-   private double totalVenda;
    private int status;
+   private double totalVenda;
    
 }

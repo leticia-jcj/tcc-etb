@@ -17,4 +17,12 @@ public class Menu {
     private String icone;
     private int status;
     
+    public boolean estaInvalido() {
+		return estaVazio(nome) || estaVazio(link) ;
+
+	}
+
+	private boolean estaVazio(String campo) {
+		return (campo.isEmpty() || campo.equals(""));
+	}
 }

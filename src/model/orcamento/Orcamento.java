@@ -18,7 +18,7 @@ public class Orcamento {
     private Cliente cliente;
     private Date dataOrcamento;
     private double totalOrcamento;
-    private double totalVenda;
     private int status;
+    
       
 }

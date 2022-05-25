@@ -92,12 +92,12 @@ public class FornecedorDAO {
 			
 		}else {
 			sql = "UPDATE fornecedor SET "
-				+ "razaoSocial = ?,"
-				+ "nomeContato = ?,"
-				+ "email = ?,"
-				+ "telefone = ?,"
-				+ "cnpj = ?,"
-				+ "status = ?" +
+				+ "razaoSocial = ?, "
+				+ "nomeContato = ?, "
+				+ "email = ?, "
+				+ "telefone = ?, "
+				+ "cnpj = ?, "
+				+ "status = ? " +
 				  "WHERE idFornecedor = ?";
 			
 			ps = con.prepareStatement(sql);
@@ -117,7 +117,7 @@ public class FornecedorDAO {
 		
 	}
 	
-	public boolean ativar(int idFornecedor)throws SQLException{
+	public boolean ativar(Fornecedor fornecedor)throws SQLException{
 		sql = "UPDATE fornecedor SET "
 			+ "status = ? "
 			+ "WHERE idFornecedor = ?";
@@ -125,15 +125,14 @@ public class FornecedorDAO {
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
 		ps.setInt(1, 1);
-		ps.setInt(2, idFornecedor);
+		ps.setInt(2, fornecedor.getIdFornecedor());
 		
 		ps.executeUpdate();
 
-		
 		return true;
 	}
 
-	public boolean desativar(int idFornecedor)throws SQLException{
+	public boolean desativar(Fornecedor fornecedor)throws SQLException{
 		sql = "UPDATE fornecedor SET "
 			+ "status = ? "
 			+ "WHERE idFornecedor = ?";
@@ -141,7 +140,7 @@ public class FornecedorDAO {
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
 		ps.setInt(1, 0);
-		ps.setInt(2,  idFornecedor);
+		ps.setInt(2,  fornecedor.getIdFornecedor());
 		
 		ps.executeUpdate();
 		

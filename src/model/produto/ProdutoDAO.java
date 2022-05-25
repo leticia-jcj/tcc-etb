@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import factory.ConexaoFactory;
+import model.fornecedor.FornecedorDAO;
 
 public class ProdutoDAO {
 
 	Connection con;
 	PreparedStatement ps;
+	FornecedorDAO daoFornecedor;
 	ResultSet rs;
 	String sql;
 	
@@ -24,10 +27,12 @@ public class ProdutoDAO {
 	ps = con.prepareStatement(sql);
 	ps.setInt(1, idProduto);
 	rs = ps.executeQuery();
+	daoFornecedor = new FornecedorDAO();
 	
 	if(rs.next()) {
 		produto.setIdProduto(rs.getInt("idProduto"));
-		produto.setIdProduto(rs.getInt("idFornecedor"));
+		produto.setFornecedor(daoFornecedor.getFornecedor(
+				rs.getInt("idFornecedor")));
 		produto.setNome(rs.getString("nome"));
 		produto.setDescricao(rs.getString("descricao"));
 		produto.setEstoque(rs.getInt("estoque"));
@@ -50,11 +55,13 @@ public class ProdutoDAO {
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
 		rs = ps.executeQuery();
+		daoFornecedor = new FornecedorDAO();
 		
 		while(rs.next()) {
 			Produto produto = new Produto();
 			produto.setIdProduto(rs.getInt("idProduto"));
-			produto.setIdFornecedor(rs.getInt("idFornecedor"));
+			produto.setFornecedor(daoFornecedor.getFornecedor(
+					rs.getInt("idFornecedor")));
 			produto.setNome(rs.getString("nome"));
 			produto.setDescricao(rs.getString("descricao"));
 			produto.setEstoque(rs.getInt("estoque"));
@@ -67,25 +74,26 @@ public class ProdutoDAO {
 			
 		}
 		
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		return produtos;
 	}
 	
 	public boolean gravar(Produto produto) throws SQLException {
 		con = ConexaoFactory.conectar();
 		
+		
 		if(produto.getIdProduto() == 0) {
 			sql = "INSERT INTO produto (idFornecedor, nome, descricao, estoque, precoUnitario, nomeFoto, caminho, status ) VALUES (?,?,?,?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, produto.getIdFornecedor());
+			ps.setInt(1, produto.getFornecedor().getIdFornecedor());
 			ps.setString(2, produto.getNome());
 			ps.setString(3, produto.getDescricao());
 			ps.setInt(4, produto.getEstoque());
 			ps.setDouble(5, produto.getPrecoUnitario());
 			ps.setString(6, produto.getNomeFoto());
 			ps.setString(7, produto.getCaminho());
-			ps.setInt(8, produto.getStatus());
+			ps.setInt(8, 1);
 			
 		}else {
 			sql = "UPDATE produto SET idProduto = ?,idFornecedor = ?, nome = ?, descricao = ?, estoque = ?, precoUnitario = ?, nomeFoto = ?, caminho= ?, status = ?" +
@@ -93,7 +101,7 @@ public class ProdutoDAO {
 			
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, produto.getIdProduto());
-			ps.setInt(2, produto.getIdFornecedor());
+			ps.setInt(2, produto.getFornecedor().getIdFornecedor());
 			ps.setString(3, produto.getNome());
 			ps.setString(4, produto.getDescricao());
 			ps.setInt(5, produto.getEstoque());
@@ -105,60 +113,21 @@ public class ProdutoDAO {
 		}
 		
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		return true;
 		
 	}
-	//Precisamos desse método?
-	
-	/*public Produto getCarregarPorId(int idProduto) throws 
-		SQLException {
-		Produto produto = new Produto();
-		sql = "SELECT idProduto, idFornecedor, nome, descricao, estoque, precoUnitario,nomeFoto = ?, caminho= ?, status " +
-			  "FROM produto WHERE idProduto = ?";
-		
-		con = ConexaoFactory.conectar();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, idProduto);
-		rs = ps.executeQuery();
-		if(rs.next()) {
-			produto.setIdProduto(rs.getInt("idProduto"));
-			produto.setIdFornecedor(rs.getInt("idFornecedor"));
-			produto.setNome(rs.getString("nome"));
-			produto.setDescricao(rs.getString("descricao"));
-			produto.setEstoque(rs.getInt("estoque"));
-			produto.setPrecoUnitario(rs.getDouble("precoUnitario"));
-			produto.setNomeFoto(rs.getString("nomeFoto"));
-			produto.setCaminho(rs.getString("caminho"));
-			produto.setStatus(rs.getInt("status"));
-		}
-		
-		ConexaoFactory.close(con);
-		return produto;
-		}
-		
-	public boolean deletar(int idProduto) throws SQLException {
-		sql = "DELETE FROM produto WHERE idProduto = ?";
-		
-		con = ConexaoFactory.conectar();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, idProduto);
-		ps.executeUpdate();
-		ConexaoFactory.close(con);
-		
-		return true;
-		
-	}*/
 	
 	public boolean desativar(Produto produto)throws SQLException{
-		sql = "UPDATE produto set status = 0 " +
+		sql = "UPDATE produto set status = ? " +
 			  "WHERE idProduto = ?";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
-		ps.setInt(1, produto.getIdProduto());
+		ps.setInt(1, 0);
+		ps.setInt(2, produto.getIdProduto());
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		
 		return true;
 	}
@@ -169,13 +138,58 @@ public class ProdutoDAO {
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
+		ps.setInt(1, 1);
 		ps.setInt(1, produto.getIdProduto());
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		
 		return true;
 	}
 	
-// AQUI falta implementar os metodos incrementar e decrementar	
+	public boolean incrementar(int idProduto, int incremento) throws SQLException{
+		//Pesquisar a estoque atual do produto
+		//Atualizar a quantidade com o incremento
+		
+		Produto p = getProduto(idProduto);
+		int novoEstoque = p.getEstoque() + incremento;
+		
+		sql = "UPDATE produto "
+			+ "SET estoque = ? "
+			+ "WHERE idProduto = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, novoEstoque);
+		ps.setInt(2, idProduto);
+		
+		ps.executeUpdate();
+		
+		ConexaoFactory.desconectar(con);
+		
+		return true;
+	}
+	
+	public boolean decrementar(int idProduto, int decremento) throws SQLException{
+		//Buscar estoque atual do produto
+		//Atualizar a quantidade com decremento
+		
+		Produto p = getProduto(idProduto);
+		int novoEstoque = p.getEstoque() - decremento;
+		
+		sql = "UPDATE produto "
+			+ "SET estoque = ? "
+			+ "WHERE idProduto = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, novoEstoque);
+		ps.setInt(2, idProduto);
+		
+		ps.executeUpdate();
+		
+		ConexaoFactory.desconectar(con);
+		
+		return true;
+	}	
 	
 }

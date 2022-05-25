@@ -14,11 +14,44 @@ public class MenuDAO {
 	ResultSet rs;
 	String sql;
 	
+	public Menu getMenu(int idMenu)
+		throws SQLException {
+		Menu m = new Menu();
+		sql = "SELECT "
+				+ "idMenu, "
+				+ "nome, "
+				+ "link, "
+				+ "icone, "
+				+ "status " +
+			  "FROM menu WHERE idMenu = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, idMenu);
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			m.setIdMenu(rs.getInt("idMenu"));
+			m.setNome(rs.getString("nome"));
+			m.setLink(rs.getString("link"));
+			m.setIcone(rs.getString("icone"));
+			m.setStatus(rs.getInt("status"));
+		}
+		
+		ConexaoFactory.desconectar(con);
+		
+		return m;
+	}
 	
 	public ArrayList<Menu> getLista()throws SQLException{
 		ArrayList<Menu> menus = new ArrayList<>();
 		
-		sql = "SELECT idMenu, nome, link, icone, status " +
+		sql = "SELECT "
+				+ "idMenu, "
+				+ "nome, "
+				+ "link, "
+				+ "icone, "
+				+ "status " +
 			  "FROM menu";
 		
 		con = ConexaoFactory.conectar();
@@ -36,7 +69,7 @@ public class MenuDAO {
 			menus.add(m);
 		}
 		
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		
 		return menus;
 			
@@ -48,8 +81,12 @@ public class MenuDAO {
 		
 		if(m.getIdMenu() == 0) {
 			
-			sql = "INSERT INTO menu (nome, link, icone, status) " +
-				  "VALUES (?, ?, ?, ?)";
+			sql = "INSERT INTO menu ("
+					+ "nome, "
+					+ "link, "
+					+ "icone, "
+					+ "status"
+					+ ") VALUES (?, ?, ?, ?)";
 			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, m.getNome());
@@ -59,8 +96,11 @@ public class MenuDAO {
 			
 			
 		}else {
-			sql = "UPDATE menu SET nome = ?, link = ?, " +
-				  "icone = ?, status = ? " +
+			sql = "UPDATE menu SET "
+					+ "nome = ?, "
+					+ "link = ?, "
+					+ "icone = ?, "
+					+ "status = ? " +
 				  "WHERE idMenu = ?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, m.getNome());
@@ -69,52 +109,46 @@ public class MenuDAO {
 			ps.setInt(4, m.getStatus());
 			ps.setInt(5, m.getIdMenu());
 			
-			
 		}
 		
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		
 		return true;
 	}
 	
-	
-	public Menu getCarregarPorId(int idMenu)
-		throws SQLException {
-		Menu m = new Menu();
-		sql = "SELECT idMenu, nome, link, icone, status " +
-			  "FROM menu WHERE idMenu = ?";
+	public boolean ativar(Menu m) throws SQLException{
+		
+		sql = "UPDATE menu SET "
+				+ "status = ? "
+			+ "WHERE idMenu = ?";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
-		ps.setInt(1, idMenu);
-		rs = ps.executeQuery();
-		if(rs.next()) {
-			m.setIdMenu(rs.getInt("idMenu"));
-			m.setNome(rs.getString("nome"));
-			m.setLink(rs.getString("link"));
-			m.setIcone(rs.getString("icone"));
-			m.setStatus(rs.getInt("status"));
-		}
+		ps.setInt(1, 1);
+		ps.setInt(2, m.getIdMenu());
 		
-		ConexaoFactory.close(con);
-		
-		return m;
-	}
-	
-	public boolean deletar(int idMenu)
-			throws SQLException{
-		
-		sql = "DELETE FROM menu WHERE idMenu = ?";
-		
-		con = ConexaoFactory.conectar();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, idMenu);
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		
+		ConexaoFactory.desconectar(con);
 		
 		return true;
-		
 	}
 
+	public boolean desativar(Menu m) throws SQLException{
+		sql = "UPDATE menu SET "
+				+ "status = ? "
+			+ "WHERE idMenu = ?";
+		
+		con = ConexaoFactory.conectar();
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, 0);
+		ps.setInt(2, m.getIdMenu());
+		ps.executeUpdate();
+		
+		ConexaoFactory.desconectar(con);
+		
+		return true;
+	}
+	
 }

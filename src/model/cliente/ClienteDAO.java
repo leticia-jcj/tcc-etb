@@ -54,8 +54,8 @@ public class ClienteDAO {
 				+ "cpf, "
 				+ "endereco, "
 				+ "email, "
-				+ "telefone "
-				+ "status" +
+				+ "telefone, "
+				+ "status " +
 			  "FROM cliente";
 		
 		con = ConexaoFactory.conectar();
@@ -64,6 +64,7 @@ public class ClienteDAO {
 		
 		while(rs.next()) {
 			Cliente cliente = new Cliente();
+			
 			cliente.setIdCliente(rs.getInt("idCliente"));
 			cliente.setNome(rs.getString("nome"));
 			cliente.setCpf(rs.getString("cpf"));
@@ -71,11 +72,12 @@ public class ClienteDAO {
 			cliente.setEndereco(rs.getString("endereco"));
 			cliente.setTelefone(rs.getString("telefone"));
 			cliente.setStatus(rs.getInt("status"));
+			
 			clientes.add(cliente);
 			
 		}
 		
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		return clientes;
 	}
 	
@@ -83,7 +85,14 @@ public class ClienteDAO {
 		con = ConexaoFactory.conectar();
 		
 		if(cliente.getIdCliente() == 0) {
-			sql = "INSERT INTO cliente (nome, cpf, email, endereco, telefone, status) VALUES (?,?.?,?,?,?)";
+			sql = "INSERT INTO cliente ("
+					+ "nome, "
+					+ "cpf, "
+					+ "email, "
+					+ "endereco, "
+					+ "telefone, "
+					+ "status"
+					+ ") VALUES (?,?,?,?,?,?)";
 			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, cliente.getNome());
@@ -91,11 +100,18 @@ public class ClienteDAO {
 			ps.setString(3, cliente.getEmail());
 			ps.setString(4, cliente.getEndereco());
 			ps.setString(5, cliente.getTelefone());
-			ps.setInt(6, cliente.getStatus());
+			ps.setInt(6, 1);
 			
 		}else {
-			sql = "UPDATE cliente SET nome = ?, cpf = ? , email= ? , endereco = ? , telefone = ? , status = ? " +
-				   "WHERE idCliente = ?";
+			sql = "UPDATE cliente "
+				+ "SET "
+					+ "nome = ?, "
+					+ "cpf = ?, "
+					+ "email= ?, "
+					+ "endereco = ?, "
+					+ "telefone = ?, "
+					+ "status = ? "
+				+ "WHERE idCliente = ?";
 			
 			ps = con.prepareStatement(sql);
 			ps.setString(1, cliente.getNome());
@@ -109,79 +125,35 @@ public class ClienteDAO {
 		}
 		
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		return true;
 		
 	}
-	
-	/*
-	public Cliente getCarregarPorId(int idCliente)throws 
-		SQLException {
-		Cliente cliente = new Cliente();
-		sql = "SELECT idCliente, "
-				+ "nome, "
-				+ "cpf, "
-				+ "email, "
-				+ "endereco, "
-				+ "telefone, "
-				+ "status " +
-			  " FROM cliente WHERE idCliente = ?";
-		
-		con = ConexaoFactory.conectar();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, idCliente);
-		rs = ps.executeQuery();
-		if(rs.next()) {
-			cliente.setIdCliente(rs.getInt("idCliente"));
-			cliente.setNome(rs.getString("nome"));
-			cliente.setCpf(rs.getString("cpf"));
-			cliente.setEmail(rs.getString("email"));
-			cliente.setEndereco(rs.getString("endereco"));
-			cliente.setTelefone(rs.getString("telefone"));
-			cliente.setStatus(rs.getInt("status"));
-		
-		}
-		
-		ConexaoFactory.close(con);
-		
-		return cliente;
-	}
-	
-	public boolean deletar(int idCliente) throws SQLException {
-		sql = "DELETE FROM cliente WHERE idCliente = ?";
-		
-		con = ConexaoFactory.conectar();
-		ps = con.prepareStatement(sql);
-		ps.setInt(1, idCliente);
-		ps.executeUpdate();
-		ConexaoFactory.close(con);
-		
-		return true;
-	}
-	*/
 	
 	public boolean desativar(Cliente cliente)throws SQLException{
-		sql = "UPDATE cliente set status = 0 " +
+		sql = "UPDATE cliente set status = ? " +
 			  "WHERE idCliente = ?";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
-		ps.setInt(1, cliente.getIdCliente());
+		ps.setInt(1, 0);
+		ps.setInt(2, cliente.getIdCliente());
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		
 		return true;
 	}
 	
 	public boolean ativar(Cliente cliente)throws SQLException{
-		sql = "UPDATE cliente set status = 1 " +
+		sql = "UPDATE cliente set status = ? " +
 			  "WHERE idCliente = ?";
 		
 		con = ConexaoFactory.conectar();
 		ps = con.prepareStatement(sql);
-		ps.setInt(1, cliente.getIdCliente());
+		ps.setInt(1, 1);
+		ps.setInt(2, cliente.getIdCliente());
 		ps.executeUpdate();
-		ConexaoFactory.close(con);
+		ConexaoFactory.desconectar(con);
 		
 		return true;
 	}
