@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Cadastrar Clientes</title>
+	<title>Cadastrar Fornecedores</title>
 	<meta charset="UTF-8"/>
 	<meta http-equiv="content-type" content="text/html"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
 	<meta name="viewport" content="width=device-width, inicial-scale=1" />
 	<link rel="stylesheet" href="css/styles.css"  type="text/css"/>
-	<link rel="stylesheet" href="css/cliente.css" type="text/css"/>
+	<link rel="stylesheet" href="css/fornecedor.css" type="text/css"/>
 	<link rel="stylesheet" href="css/bootstrap.min.css" >
   	<link href="fonts/css/all.css" rel="stylesheet" type="text/css">
 </head>
@@ -17,8 +17,8 @@
 			<!--<jsp:include page="template/banner.jsp"></jsp:include>-->
 		</div>
 		
-		<div id="cliente">
-			<!--<jsp:include page="template/cliente.jsp"></jsp:include>
+		<div id="fornecedor">
+			<!--<jsp:include page="template/fornecedor.jsp"></jsp:include>
 			<i class="fa-solid fa-bars-filter"></i>-->
 		</div>
 		
@@ -34,52 +34,52 @@
 				<h3
 					style="text-align: center;"
 					class="pb-3"
-					>Cadastro de Clientes</h3>
+					>Cadastro de Fornecedores</h3>
 					
 				<div class="col-sm-12">
-					<form action="gerenciarCliente" method="POST">
-						<input type="hidden" id="idCliente" name="idCliente" value="${ cliente.idCliente }" />
+					<form action="gerenciarFornecedor" method="POST">
+						<input type="hidden" id="idFornecedor" name="idFornecedor" value="${ fornecedor.idFornecedor }" />
 						
 						<div class="form-group">
-							<label for="idNome">Nome</label>
-							<input name="nome" type="text" class="form-control" id="idNome" aria-describedby="nomeHelp" placeholder="" value="${ cliente.nome }">
-							<small id="nomeHelp" class="form-text text-muted">Insira o nome do cliente.</small>
+							<label for="idRazaoSocial">Razão Social</label>
+							<input name="razaosocial" type="text" class="form-control" id="idRazaoSocial" aria-describedby="nomeHelp" placeholder="" value="${ fornecedor.razaosocial }">
+							<small id="nomeHelp" class="form-text text-muted">Insira a razão social do fornecedor.</small>
 						</div>
 						
 						<div class="form-group">
-							<label for="idCpf">CPF</label>
-							<input name="cpf" type="text" class="form-control" id="idCpf" aria-describedby="nomeHelp" placeholder="" value="${ cliente.cpf }">
-							<small id="nomeHelp" class="form-text text-muted">Insira o CPF do cliente.</small>
-						</div>
-						
-						<div class="form-group">
-							<label for="idEndereco">Endereco</label>
-							<input name="endereco" type="text" class="form-control" id="idEndereco" aria-describedby="nomeHelp" placeholder="" value='${ cliente.endereco }'>
-							<small id="nomeHelp" class="form-text text-muted">Insira o endereço do cliente.</small>
+							<label for="idNomeContato">Nome do Contato</label>
+							<input name="nomecontato" type="text" class="form-control" id="idNomeContato" aria-describedby="nomeHelp" placeholder="" value="${ fornecedor.nomecontato }">
+							<small id="nomeHelp" class="form-text text-muted">Insira o nome do contato do fornecedor.</small>
 						</div>
 						
 						<div class="form-group">
 							<label for="idEmail">Email</label>
-							<input name="email" type="text" class="form-control" id="idEmail" aria-describedby="nomeHelp" placeholder="exemplo@gmail.com" value='${ cliente.email }'>
-							<small id="nomeHelp" class="form-text text-muted">Insira o email do cliente.</small>
+							<input name="email" type="text" class="form-control" id="idEmail" aria-describedby="nomeHelp" placeholder="exemplo@gmail.com" value='${ fornecedor.email }'>
+							<small id="nomeHelp" class="form-text text-muted">Insira o email do fornecedor.</small>
 						</div>
 						
 						<div class="form-group">
 							<label for="idTelefone">Telefone</label>
-							<input name="telefone" type="text" class="form-control" id="iidTelefone" aria-describedby="nomeHelp" placeholder="exemplo@gmail.com" value='${ cliente.telefone }'>
-							<small id="nomeHelp" class="form-text text-muted">Insira o telefone do cliente.</small>
+							<input name="telefone" type="text" class="form-control" id="iidTelefone" aria-describedby="nomeHelp" placeholder="exemplo@gmail.com" value='${ fornecedor.telefone }'>
+							<small id="nomeHelp" class="form-text text-muted">Insira o telefone do fornecedor.</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idCnpj">CNPJ</label>
+							<input name="cnpj" type="text" class="form-control" id="idCnpj" aria-describedby="nomeHelp" placeholder="" value="${ fornecedor.cnpj }">
+							<small id="nomeHelp" class="form-text text-muted">Insira o CNPJ do fornecedor.</small>
 						</div>
 						
 						<div class="mb-3">
 							<label>Exibir</label>
 							<div class="form-check">
-							 	<input class="form-check-input" type="radio" name="status" id="idRadioNao" value="0" ${cliente.status==0?'checked':''} >
+							 	<input class="form-check-input" type="radio" name="status" id="idRadioNao" value="0" ${fornecedor.status==0?'checked':''} >
 							  	<label class="form-check-label" for="idRadioNao">
 							    	Não
 							  	</label>
 							</div>
 							<div class="form-check">
-							  	<input class="form-check-input" type="radio" name="status" id="idRadioSim" value="1" ${cliente.status==1?'checked':''} >
+							  	<input class="form-check-input" type="radio" name="status" id="idRadioSim" value="1" ${fornecedor.status==1?'checked':''} >
 							  	<label class="form-check-label" for="idRadioSim">
 							    	Sim
 							  	</label>
