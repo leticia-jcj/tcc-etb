@@ -110,11 +110,12 @@
 											
 											<button
 												class="btn btn-danger btn-md"
-												onclick="confirmarExclusao( ${ cliente.idCliente }, 
+												onclick="confirmarExclusao( 
+												 ${ cliente.idCliente }, 
 												'${ cliente.nome }',
 												'${ cliente.cpf }',
 											    '${ cliente.endereco },
-											    , '${ cliente.email }' 
+											    '${ cliente.email }' 
 											    '${ cliente.telefone }')">
 													Excluir
 													<i class="fa-solid fa-trash ml-2"></i>
