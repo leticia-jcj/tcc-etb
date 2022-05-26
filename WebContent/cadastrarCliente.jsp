@@ -1,118 +1,219 @@
-<%@ page language="java" 
-	contentType="text/html; utf-8"
-    pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"  %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Projeto ETB</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta http-equiv="content-type" content="text/html">
-	<meta name="viewport" content="width=device-width, 
-				initial-scale=1.0, shrink-to-fit=no">
-	<link rel="stylesheet" href="css/styles.css" type="text/css">
-	<link rel="stylesheet" href="css/menu.css" type="text/css">
-	<link rel="stylesheet" href="bootstrap/bootstrap.min.css" type="text/css">
-	<link rel="stylesheet" href="fonts/css/all.css" type="text/css">
+	<title>Cadastrar Clientes</title>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="content-type" content="text/html"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+	<meta name="viewport" content="width=device-width, inicial-scale=1" />
+	<link rel="stylesheet" href="css/styles.css"  type="text/css"/>
+	<link rel="stylesheet" href="css/cliente.css" type="text/css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+  	<link href="fonts/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="d-flex flex-column align-items-stretch">
 		<div id="header">
-			<jsp:include page="template/banner.jsp"></jsp:include>
-		
+			<!--<jsp:include page="template/banner.jsp"></jsp:include>-->
 		</div>
-		<div id="menu">
-			<jsp:include page="template/menu.jsp"></jsp:include>
-
-		</div> <!-- fim da div menu -->
 		
-		<div id="conteudo" class="bg-background">
-			<form action="gerenciarCliente" method="POST">
-			<h3 class="text-center mt-3">Cadastro de Cliente</h3>
+		<div id="cliente">
+			<!--<jsp:include page="template/cliente.jsp"></jsp:include>
+			<i class="fa-solid fa-bars-filter"></i>-->
+		</div>
+		
+		<div id="content">
 			
-			<input type="hidden" id="idcliente" name="idCliente"
-				value="${cliente.idCliente}">
-				
-			<div class="form-group row offset-md-2 mt-3">
-				<label for="idnome"
-					 class="col-md-2 col-form-label">Nome</label>
-				<div class="col-md-7">
-					<input type="text" name="nome" id="nome"
-					class="form-control" value="${cliente.nome }">
+			<div class="
+				h-100
+				justify-content-center
+				align-items-center 
+				ml-auto mr-auto
+				box-cadastro
+				">
+				<h3
+					style="text-align: center;"
+					class="pb-3"
+					>Cadastro de Clientes</h3>
+					
+				<div class="col-sm-12">
+					<form action="gerenciarCliente" method="POST">
+						<input type="hidden" id="idCliente" name="idCliente" value="${ cliente.idCliente }" />
+						
+						<div class="form-group">
+							<label for="idNome">Nome</label>
+							<input name="nome" type="text" class="form-control" id="idNome" aria-describedby="nomeHelp" placeholder="ex Admin" value="${ cliente.nome }">
+							<small id="nomeHelp" class="form-text text-muted">Insira o nome do perfil a ser adicionado.</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idLink">Link</label>
+							<input name="link" type="text" class="form-control" id="idLink" aria-describedby="nomeHelp" placeholder="ex Admin" value="${ cliente.link }">
+							<small id="nomeHelp" class="form-text text-muted">Insira o link de redirecionamento.</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idIcone">Icone</label>
+							<input name="icone" type="text" class="form-control" id="idIcone" aria-describedby="nomeHelp" placeholder="ex Admin" value='${ cliente.icone }'>
+							<small id="nomeHelp" class="form-text text-muted">Insira o ícone do cliente a ser exibido.</small>
+						</div>
+						
+						
+						<div class="mb-3">
+							<label>Exibir</label>
+							<div class="form-check">
+							 	<input class="form-check-input" type="radio" name="status" id="idRadioNao" value="0" ${cliente.status==0?'checked':''} >
+							  	<label class="form-check-label" for="idRadioNao">
+							    	Não
+							  	</label>
+							</div>
+							<div class="form-check">
+							  	<input class="form-check-input" type="radio" name="status" id="idRadioSim" value="1" ${cliente.status==1?'checked':''} >
+							  	<label class="form-check-label" for="idRadioSim">
+							    	Sim
+							  	</label>
+							</div>
+							<small id="nomeHelp" class="form-text text-muted">Selecione uma opção para.</small>
+						</div>
+						
+						<div class="p-grip gap-2 flex justify-content-md-between">
+							<a role="button" class="btn btn-outline-secondary" onclick="history.back()">
+								<i class="fa-solid fa-arrow-left mr-1"></i>
+								Voltar
+							</a>
+							<button type="submit" class="btn btn-primary">
+								<i class="fa-solid fa-floppy-disk mr-1"></i>
+								Cadastrar
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
-			
-			<div class="form-group row offset-md-2 mt-3">
-				<label for="idcpf"
-					 class="col-md-2 col-form-label">CPF</label>
-				<div class="col-md-7">
-					<input type="text" name="cpf" id="cpf"
-					class="form-control" value="${cliente.cpf}">
-				</div>
-			</div>
-			
-			<div class="form-group row offset-md-2 mt-3">
-				<label for="idemail"
-					 class="col-md-2 col-form-label">E-mail</label>
-				<div class="col-md-7">
-					<input type="text" name="email" id="email"
-					class="form-control" value="${cliente.email}">
-				</div>
-			</div>
-			
-			<div class="form-group row offset-md-2 mt-3">
-				<label for="idendereco"
-					 class="col-md-2 col-form-label">EndereÃ§o</label>
-				<div class="col-md-7">
-					<input type="text" name="endereco" id="endereco"
-					class="form-control" value="${cliente.endereco}">
-				</div>
-			</div>
-			
-			<div class="form-group row offset-md-2 mt-3">
-				<label for="idtelefone"
-					 class="col-md-2 col-form-label">Telefone</label>
-				<div class="col-md-7">
-					<input type="text" name="telefone" id="telefone"
-					class="form-control" value="${cliente.telefone}">
-				</div>
-			</div>
-			
-			<div class="d-grip gap-2 d-md-flex justify-content-md-end mr-3">
-					<button class="btn btn-primary btn-md mr-2">
-						Gravar&nbsp;
-						<i class="fa-solid fa-floppy-disks"></i>
-					</button>
-					<a href="listarCliente.jsp"
-							class="btn btn-info btn-md"
-							role="button">
-							Voltar&nbsp;
-							<i class="fa-solid fa-circle-left"></i>
-					</a>
-				</div>
-			</form>
-			
-			</div> <!-- fim da div conteudo -->
-			
-		</div> <!-- fim da div container -->
-	
+		</div>
+	</div>
+
 	<!-- JQuery.js -->
-	<script src="js/jquery.min.js"></script>
+	<script src="javascript/jquery-3.2.1.slim.min.js"></script>
 	
-	
-	<!-- Popper via cdn -->
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
-   integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
-   crossorigin = "anonymous">
-	</script>
+	<!-- Pooper via cdn -->
+	<script src="javascript/popper.min.js"></script>
 	
 	<!-- Bootstrap.js -->
-	<script src="js/bootstrap.min.js"></script>
+	<script src="javascript/bootstrap.min.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+	<title>Cadastrar Clientes</title>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="content-type" content="text/html"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+	<meta name="viewport" content="width=device-width, inicial-scale=1" />
+	<link rel="stylesheet" href="css/styles.css"  type="text/css"/>
+	<link rel="stylesheet" href="css/cliente.css" type="text/css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+  	<link href="fonts/css/all.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container" class="d-flex flex-column align-items-stretch">
+		<div id="header">
+			<!--<jsp:include page="template/banner.jsp"></jsp:include>-->
+		</div>
+		
+		<div id="cliente">
+			<!--<jsp:include page="template/cliente.jsp"></jsp:include>
+			<i class="fa-solid fa-bars-filter"></i>-->
+		</div>
+		
+		<div id="content">
+			
+			<div class="
+				h-100
+				justify-content-center
+				align-items-center 
+				ml-auto mr-auto
+				box-cadastro
+				">
+				<h3
+					style="text-align: center;"
+					class="pb-3"
+					>Cadastro de Clientes</h3>
+					
+				<div class="col-sm-12">
+					<form action="gerenciarCliente" method="POST">
+						<input type="hidden" id="idCliente" name="idCliente" value="${ cliente.idCliente }" />
+						
+						<div class="form-group">
+							<label for="idNome">Nome</label>
+							<input name="nome" type="text" class="form-control" id="idNome" aria-describedby="nomeHelp" placeholder="ex Admin" value="${ cliente.nome }">
+							<small id="nomeHelp" class="form-text text-muted">Insira o nome do perfil a ser adicionado.</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idCpf">CPF</label>
+							<input name="cpf" type="text" class="form-control" id="idCpf" aria-describedby="nomeHelp" placeholder="" value="${ cliente.cpf }">
+							<small id="nomeHelp" class="form-text text-muted">Insira o CPF do cliente</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idEndereco">Endereço</label>
+							<input name="endereco" type="text" class="form-control" id="idEndereco" aria-describedby="nomeHelp" placeholder="" value='${ cliente.endereco }'>
+							<small id="nomeHelp" class="form-text text-muted">Insira o endereço do cliente.</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idEmail">Email</label>
+							<input name="email" type="text" class="form-control" id="idEmail" aria-describedby="nomeHelp" placeholder="" value='${ cliente.email }'>
+							<small id="nomeHelp" class="form-text text-muted">Insira o email do cliente.</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idTelefone">Telefone</label>
+							<input name="telefone" type="text" class="form-control" id="id|Telefone" aria-describedby="nomeHelp" placeholder="(Ex.: 61 9959-1414)" value='${ cliente.telefone }'>
+							<small id="nomeHelp" class="form-text text-muted">Insira o telefone do cliente.</small>
+						</div>
+						
+						
+						<div class="mb-3">
+							<label>Exibir</label>
+							<div class="form-check">
+							 	<input class="form-check-input" type="radio" name="status" id="idRadioNao" value="0" ${cliente.status==0?'checked':''} >
+							  	<label class="form-check-label" for="idRadioNao">
+							    	Não
+							  	</label>
+							</div>
+							<div class="form-check">
+							  	<input class="form-check-input" type="radio" name="status" id="idRadioSim" value="1" ${cliente.status==1?'checked':''} >
+							  	<label class="form-check-label" for="idRadioSim">
+							    	Sim
+							  	</label>
+							</div>
+							<small id="nomeHelp" class="form-text text-muted">Selecione uma opção.</small>
+						</div>
+						
+						<div class="p-grip gap-2 flex justify-content-md-between">
+							<a role="button" class="btn btn-outline-secondary" onclick="history.back()">
+								<i class="fa-solid fa-arrow-left mr-1"></i>
+								Voltar
+							</a>
+							<button type="submit" class="btn btn-primary">
+								<i class="fa-solid fa-floppy-disk mr-1"></i>
+								Cadastrar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- JQuery.js -->
+	<script src="javascript/jquery-3.2.1.slim.min.js"></script>
 	
+	<!-- Pooper via cdn -->
+	<script src="javascript/popper.min.js"></script>
 	
+	<!-- Bootstrap.js -->
+	<script src="javascript/bootstrap.min.js"></script>
 </body>
 </html>
