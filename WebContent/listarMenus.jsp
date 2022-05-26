@@ -68,9 +68,9 @@
 									<th>Código</th>
 									<th>Nome</th>
 									<th>Link</th>
-									<th>Icone</th>
+									<th>Ícone</th>
 									<th>Exibir</th>
-									<th>Ações</th>
+									<th>Ação</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -89,12 +89,8 @@
 										</td>
 										<td>
 											<script type="text/javascript">
-												function confirmarExclusao(id, nome){
-													if(confirm("Deseja realmente excluir o menu '"
-															+ nome + "' ?")){
-														location.href = "gerenciarMenu?acao=deletar&idMenu=" + id
-													}
-												}
+												
+												
 											</script>
 											<a
 												role="button"
@@ -105,12 +101,38 @@
 													<i class="fa-solid fa-pencil ml-2"></i>
 											</a>
 											
-											<button
+											<c:if test="${ m.status == 0 }">
+												<button
 												class="btn btn-danger btn-md"
-												onclick="confirmarExclusao( ${ m.idMenu }, '${ m.nome }')">
-													Excluir
-													<i class="fa-solid fa-trash ml-2"></i>
-											</button>
+												onclick="confirmarAtivar( ${ m.idMenu }, '${ m.nome }')">
+													Ativar
+													<i class="fa-solid fa-circle-check"></i>
+													<script>
+														function confirmarAtivar(id, nome){
+															if(confirm("Deseja realmente ativar o menu '"
+																	+ nome + "' ?")){
+																location.href = "gerenciarMenu?acao=ativar&idMenu=" + id
+															}
+														}
+													</script>
+												</button>
+											</c:if>
+											<c:if test="${ m.status == 1 }">
+												<button
+												class="btn btn-danger btn-md"
+												onclick="confirmarDesativar( ${ m.idMenu }, '${ m.nome }')">
+													Desativar
+													<i class="fa-solid fa-circle-xmark"></i>
+												</button>
+												<script>
+													function confirmarDesativar(id, nome){
+														if(confirm("Deseja realmente desativar o menu '"
+																+ nome + "' ?")){
+															location.href = "gerenciarMenu?acao=desativar&idMenu=" + id
+														}
+													}
+												</script>
+											</c:if>
 										</td>
 									</tr>
 								</c:forEach>
