@@ -34,8 +34,8 @@
 			<!--<jsp:include page="template/banner.jsp"></jsp:include>-->
 		</div>
 		
-		<div id="cliente">
-			<!--<jsp:include page="template/cliente.jsp"></jsp:include>
+		<div id="menu">
+			<!--<jsp:include page="template/menu.jsp"></jsp:include>
 			<i class="fa-solid fa-bars-filter"></i>-->
 		</div>
 		
