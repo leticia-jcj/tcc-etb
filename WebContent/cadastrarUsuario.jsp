@@ -1,149 +1,103 @@
-<%@ page language="java" 
-	contentType="text/html; utf-8"
-    pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"  %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Projeto ETB</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta http-equiv="content-type" content="text/html">
-	<meta name="viewport" content="width=device-width, 
-				initial-scale=1.0, shrink-to-fit=no">
-	<link rel="stylesheet" href="css/styles.css" type="text/css">
-	<link rel="stylesheet" href="css/menu.css" type="text/css">
-	<link rel="stylesheet" href="bootstrap/bootstrap.min.css" type="text/css">
-	<link rel="stylesheet" href="fonts/css/all.css" type="text/css">
+	<title>Cadastrar Usuários</title>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="content-type" content="text/html"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+	<meta name="viewport" content="width=device-width, inicial-scale=1" />
+	<link rel="stylesheet" href="css/styles.css"  type="text/css"/>
+	<link rel="stylesheet" href="css/usuario.css" type="text/css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+  	<link href="fonts/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="d-flex flex-column align-items-stretch">
 		<div id="header">
-			<jsp:include page="template/banner.jsp"></jsp:include>
-		
+			<!--<jsp:include page="template/banner.jsp"></jsp:include>-->
 		</div>
-		<div id="menu">
-			<jsp:include page="template/menu.jsp"></jsp:include>
-
-		</div> <!-- fim da div menu -->
 		
-		<div id="conteudo" class="bg-background">
-			<form action="gerenciarUsuario" method="POST">
-			<h3 class="text-center mt-3">Cadastro de UsuÃ¡rio</h3>
-			
-			<input type="hidden" id="idusuario" name="idUsuario"
-				value="${usuario.idUsuario}">
-			<div class="form-group row offset-md-2 mt-3">
-				<label for="idnome"
-					   class="col-md-2 col-form-label">Nome</label>
-				<div class="col-md-7">
-					<input type="text" name="nome" id="nome"
-							class="form-control"
-							value="${usuario.nome }">
-				
-				</div>
-			
-			</div>
-			
-			<div class="form-group row offset-md-2">
-				<label for="idlogin"
-					class="col-md-2 col-form-label">Login</label>
-				<div class="col-md-7 mt-2">
-					<input type="text" name="login" id="idlogin"
-							class="form-control"
-							value="${usuario.login}"> 
-				</div>
-			
-			</div>
-			
-			<div class="form-group row offset-md-2">
-				<label for="idsenha"
-					class="col-md-2 col-form-label">Senha</label>
-				<div class="col-md-7 mt-2">
-					<input type="password" name="senha" id="idsenha"
-							class="form-control"
-							value="${usuario.senha}"> 
-				</div>
-			
-			</div>
-			
-			<div class="form-group row offset-md-2">
-					<label for="idstatus"
-						class="col-md-2 form-label">Status</label>
-					<div class="col-md-6">
-						<select id="idstatus" name="status" 
-								class="form-control-md mt-2">
-							<option value="1" 
-								<c:if test="${usuario.status == 1 }" >
-								</c:if> selected>Ativo
-							</option>
-							<option value="0"
-								<c:if test="${usuario.status == 0 }" >
-								</c:if> selected>Inativo
-							</option>
-						</select>
-					</div>
-			</div>
-			
-			<div class="form-group row offset-md-2">
-					<label for="idperfil"
-						class="col-md-2 form-label">Perfil</label>
-					<div class="col-md-6">
-						<select id="idperfil" name="idPerfil" 
-								class="form-control-md mt-2">
-							<jsp:useBean class="model.perfil.PerfilDAO" id="pdao"/>
-							<c:forEach var="p" items="${pdao.lista}">
-								<option value="${p.idPerfil }"
-									<c:if test="${p.idPerfil == usuario.perfil.idPerfil}"> 
-										selected
-									</c:if>	>${p.nome}</option>
-							</c:forEach>
-							
-						</select>
-					</div>
-			</div>
-			
-			
-			
-			
-			<div class="d-grip gap-2 d-md-flex justify-content-md-end mr-3">
-				<button class="btn btn-primary btn-md mr-2" >
-					Gravar&nbsp;
-					<i class="fa-solid fa-floppy-disk"></i>
-				</button>
-				<a href="listarUsuario.jsp"
-					class="btn btn-info btn-md"
-					role="button">
-					Voltar&nbsp;
-					<i class="fa-solid fa-circle-left"></i>
-				</a>
-			
-			
-			
-			</div>
-			
-			
-			</form>
-
+		<div id="usuario">
+			<!--<jsp:include page="template/usuario.jsp"></jsp:include>
+			<i class="fa-solid fa-bars-filter"></i>-->
+		</div>
 		
+		<div id="content">
+			
+			<div class="
+				h-100
+				justify-content-center
+				align-items-center 
+				ml-auto mr-auto
+				box-cadastro
+				">
+				<h3
+					style="text-align: center;"
+					class="pb-3"
+					>Cadastro de Usuários</h3>
+					
+				<div class="col-sm-12">
+					<form action="gerenciarUsuario" method="POST">
+						<input type="hidden" id="idUsuario" name="idUsuario" value="${ usuario.idUsuario }" />
+						
+						<div class="form-group">
+							<label for="idNome">Nome</label>
+							<input name="nome" type="text" class="form-control" id="idNome" aria-describedby="nomeHelp" placeholder="" value="${ usuario.nome }">
+							<small id="nomeHelp" class="form-text text-muted">Insira o nome do usuário.</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idLogin">Login</label>
+							<input name="login" type="text" class="form-control" id="idLogin" aria-describedby="nomeHelp" placeholder="" value="${ usuario.login }">
+							<small id="nomeHelp" class="form-text text-muted">Insira o login do usuário.</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="idSenha">Senha</label>
+							<input name="senha" type="text" class="form-control" id="idSenha" aria-describedby="nomeHelp" placeholder="" value='${ usuario.senha }'>
+							<small id="nomeHelp" class="form-text text-muted">Insira a senha do usuário.</small>
+						</div>
+						
+						<div class="mb-3">
+							<label>Exibir</label>
+							<div class="form-check">
+							 	<input class="form-check-input" type="radio" name="status" id="idRadioNao" value="0" ${usuario.status==0?'checked':''} >
+							  	<label class="form-check-label" for="idRadioNao">
+							    	Não
+							  	</label>
+							</div>
+							<div class="form-check">
+							  	<input class="form-check-input" type="radio" name="status" id="idRadioSim" value="1" ${usuario.status==1?'checked':''} >
+							  	<label class="form-check-label" for="idRadioSim">
+							    	Sim
+							  	</label>
+							</div>
+							<small id="nomeHelp" class="form-text text-muted">Selecione uma opção para.</small>
+						</div>
+						
+						<div class="p-grip gap-2 flex justify-content-md-between">
+							<a role="button" class="btn btn-outline-secondary" onclick="history.back()">
+								<i class="fa-solid fa-arrow-left mr-1"></i>
+								Voltar
+							</a>
+							<button type="submit" class="btn btn-primary">
+								<i class="fa-solid fa-floppy-disk mr-1"></i>
+								Cadastrar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
+
 	<!-- JQuery.js -->
-	<script src="js/jquery.min.js"></script>
+	<script src="javascript/jquery-3.2.1.slim.min.js"></script>
 	
-	
-	<!-- Popper via cdn -->
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
-   integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
-   crossorigin = "anonymous">
-	</script>
+	<!-- Pooper via cdn -->
+	<script src="javascript/popper.min.js"></script>
 	
 	<!-- Bootstrap.js -->
-	<script src="js/bootstrap.min.js"></script>
-	
-	
+	<script src="javascript/bootstrap.min.js"></script>
 </body>
 </html>
